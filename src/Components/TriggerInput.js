@@ -3,7 +3,8 @@ import React from 'react';
 const TriggerInput = (props) => {
     return (
       <div className="TriggerInput">
-        TriggerInput
+        <label>Trigger</label>
+        <input type="text"/>
       </div>
     );
 }

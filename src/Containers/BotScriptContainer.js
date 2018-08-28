@@ -20,5 +20,12 @@ const mapStateToProps = state => {
   }
 }
 
+const mapDispatchToProps = dispatch => {
+  return {
+    addTrigger: (formData) => dispatch({type: "ADD_TRIGGER", trigger: formData}),
+    addResponse: (formData, triggerId) => dispatch({type: "ADD_RESPONSE", response: formData, triggerId: triggerId})
+  }
+}
 
-export default connect(mapStateToProps)(BotScriptContainer);
+
+export default connect(mapStateToProps, mapDispatchToProps)(BotScriptContainer);
