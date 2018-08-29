@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Navbar from './Containers/Navbar';
 import WelcomeContainer from './Containers/WelcomeContainer'
 import BotMakerContainer from './Containers/BotMakerContainer'
-import {BrowserRouter, Route, Link, Switch} from "react-router-dom";
+import {Route, Link, Switch} from "react-router-dom";
 
 import './App.css';
 
