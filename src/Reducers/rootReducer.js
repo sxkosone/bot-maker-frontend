@@ -22,15 +22,16 @@ function manageScript(state = [], action) {
         case "ADD_MANY_NEW_PAIRS":
             //take in an array of trigger-response objects, like this
             //[{trigger:"hi", response: ["hii", "hi to you"]}, {trigger: "bye", responses: ["byebye", "bai"]}]
-            
-            return [...action.newPairs]
+            let newCleanPairs = action.newPairs.filter(pair => pair.trigger !== "")
+            return [...newCleanPairs]
+            //return [...action.newPairs]
         default:
             return state
     }
 }
 
 function manageUserAndBot(state = {
-    botName: "Bot"
+    botName: ""
 }, action) {
     switch(action.type) {
         case "ADD_BOTNAME":

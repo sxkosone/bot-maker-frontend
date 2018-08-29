@@ -21,13 +21,14 @@ class BotScriptContainer extends React.Component {
 
   handleSubmit = (e) => {
     e.preventDefault()
-    this.state.pairs.map(pair => {
+    const newArr = this.state.pairs.map(pair => {
       //separate each answer to it's own string if find ;
-      
-      pair.response = pair.response.split(";")
+      if(typeof pair.response === "string") {
+        pair.response = pair.response.split(";")
+      }
       return pair
     })
-    this.props.addNewPairs(this.state.pairs)
+    this.props.addNewPairs(newArr)
     localStorage.setItem("scripts", JSON.stringify(this.state.pairs))
 
   }
