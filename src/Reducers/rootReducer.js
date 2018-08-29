@@ -4,8 +4,6 @@ import { combineReducers } from "redux";
 const rootReducer = combineReducers({
     scripts: manageScript,
     userAndBot: manageUserAndBot
-    // triggers: manageTriggers,
-    // responses: manageResponses
 });
 
 export default rootReducer;
@@ -24,7 +22,6 @@ function manageScript(state = [], action) {
             //[{trigger:"hi", response: ["hii", "hi to you"]}, {trigger: "bye", responses: ["byebye", "bai"]}]
             let newCleanPairs = action.newPairs.filter(pair => pair.trigger !== "")
             return [...newCleanPairs]
-            //return [...action.newPairs]
         default:
             return state
     }
@@ -40,32 +37,3 @@ function manageUserAndBot(state = {
         return state
     }
 }
-
-//these may not be necessary anymore!!
-// function manageTriggers(state = []
-//     , action) {
-//         console.log("received in the manageTriggers reducer:", action)
-//         switch(action.type) {
-//             case "ADD_TRIGGER":
-//                 const newTrigger = { text: action.trigger, id: cuid()}
-//                 return [...state, newTrigger]
-//             case "DELETE_TRIGGER":
-//                 return state.filter(trigger => trigger.id !== action.id)
-//             default:
-//                 return state
-//         }
-// }
-
-// function manageResponses(state = []
-//     , action) {
-//         console.log("received in the manageResponses reducer:", action)
-//         switch(action.type) {
-//             case "ADD_RESPONSE":
-//                 const newResponse = { text: action.response, triggerId: action.triggerId, id: cuid()}
-//                 return [...state, newResponse]
-//             case "DELETE_TRIGGER":
-//                 return state.filter(response => response.id !== action.id)
-//             default:
-//                 return state
-//         }
-// }

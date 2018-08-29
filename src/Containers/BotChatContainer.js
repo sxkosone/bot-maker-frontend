@@ -1,7 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import MessageHistory from './MessageHistory';
-import {Link} from 'react-router-dom' 
+import {Link} from 'react-router-dom';
+import { Form, Button } from 'semantic-ui-react';
 
 class BotChatContainer extends React.Component {
     state = {
@@ -49,11 +50,13 @@ class BotChatContainer extends React.Component {
         <div className="botChatContainer">
             <h2>{this.props.botName === "" ? "Chat with your bot" : `Chat with ${this.props.botName} the bot`}</h2>
             <MessageHistory history={this.state.messageHistory}/>
-            <form onSubmit={this.handleUserSend}>
-                <input type="text" value={this.state.userInput} onChange={this.handleUserTyping}/>
-                <input type="submit" value="Send" />
-            </form>
-            <Link to="/create">Back to the drawing board</Link>
+            <Form onSubmit={this.handleUserSend}>
+            <Form.Group>
+                <Form.Input type="text" value={this.state.userInput} onChange={this.handleUserTyping}/>
+                <Form.Input type="submit" value="Send" />
+                </Form.Group>
+            </Form>
+            <Button as={ Link } to="/create">Back to the drawing board</Button>
         </div>
 
         )

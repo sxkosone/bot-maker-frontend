@@ -1,6 +1,7 @@
 import React from 'react';
 import BotScriptContainer from './BotScriptContainer';
 import { connect } from 'react-redux';
+import { Form } from 'semantic-ui-react';
 
 class BotMakerContainer extends React.Component {
   state = {
@@ -18,15 +19,16 @@ class BotMakerContainer extends React.Component {
   render() {
     return (
       <div className="BotMakerContainer">
-        BotMakerContainer
         <BotScriptContainer />
         {/* where will this container end up in the final view? should i make own route? */}
         {/* <BotChatContainer /> */}
         Name your bot!
-        <form onSubmit={this.handleSubmit}>
-          <input type="text" value={this.state.nameInput} onChange={this.handleChange}/>
-          <input type="submit" value="name!"/>
-        </form>
+        <Form onSubmit={this.handleSubmit}>
+        <Form.Group>
+          <Form.Input type="text" value={this.state.nameInput} onChange={this.handleChange}/>
+          <Form.Input type="submit" value="name!"/>
+          </Form.Group>
+        </Form>
       </div>
     );
   }
