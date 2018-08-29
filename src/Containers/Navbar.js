@@ -1,5 +1,5 @@
 import React from 'react';
-import {Link, NavLink} from 'react-router-dom'
+import { NavLink} from 'react-router-dom'
 
 class Navbar extends React.Component {
   render() {
@@ -8,6 +8,7 @@ class Navbar extends React.Component {
         
         <NavLink exact to="/">BotMaker</NavLink>
         <NavLink exact to="/create">Create</NavLink>
+        
         <NavLink to="/">Login</NavLink>
       </div>
     );

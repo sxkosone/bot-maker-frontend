@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import MessageHistory from './MessageHistory';
+import {Link} from 'react-router-dom' 
 
 class BotChatContainer extends React.Component {
     state = {
@@ -19,7 +20,7 @@ class BotChatContainer extends React.Component {
             userInput: "",
             messageHistory: this.state.messageHistory.concat({sender: "human", text: this.state.userInput})
         })
-        setTimeout(() => this.makeBotResponse(userMessage), 1000)
+        setTimeout(() => this.makeBotResponse(userMessage), 1500)
     }
     makeBotResponse = (userMessage) => {
         const cleanUserMessage = userMessage.replace(/\s/g,'').toLowerCase()
@@ -31,8 +32,10 @@ class BotChatContainer extends React.Component {
             //if find match, choose one from the array of responses
             if(cleanTrigger === cleanUserMessage) {
                 //choose random response
-                let randomI = Math.floor(Math.random()*pair.response.length);
-                botResponse = pair.response[randomI]
+                //response will hold a string at this point, split it into parts
+                let responses = pair.response.split(";")
+                let randomI = Math.floor(Math.random()*responses.length);
+                botResponse = responses[randomI]
             }
         })
         //push a new bot message into the state.messageHistory
@@ -44,12 +47,13 @@ class BotChatContainer extends React.Component {
     render() {
         return(
         <div className="botChatContainer">
-            <h2>Chat with your bot</h2>
+            <h2>{this.props.botName === "" ? "Chat with your bot" : `Chat with ${this.props.botName} the bot`}</h2>
             <MessageHistory history={this.state.messageHistory}/>
             <form onSubmit={this.handleUserSend}>
                 <input type="text" value={this.state.userInput} onChange={this.handleUserTyping}/>
                 <input type="submit" value="Send" />
             </form>
+            <Link to="/create">Back to the drawing board</Link>
         </div>
 
         )
@@ -59,7 +63,8 @@ class BotChatContainer extends React.Component {
 //you will have to change this to retrieving from LocalStorage!!
 const mapStateToProps = state => {
     return {
-        scripts: state.scripts
+        scripts: state.scripts,
+        botName: state.userAndBot.botName
     }
 }
 

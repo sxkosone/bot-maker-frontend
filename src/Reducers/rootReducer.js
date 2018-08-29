@@ -2,7 +2,8 @@
 import { combineReducers } from "redux";
 
 const rootReducer = combineReducers({
-    scripts: manageScript
+    scripts: manageScript,
+    userAndBot: manageUserAndBot
     // triggers: manageTriggers,
     // responses: manageResponses
 });
@@ -22,9 +23,20 @@ function manageScript(state = [], action) {
             //take in an array of trigger-response objects, like this
             //[{trigger:"hi", response: ["hii", "hi to you"]}, {trigger: "bye", responses: ["byebye", "bai"]}]
             
-            return [...state, ...action.newPairs]
+            return [...action.newPairs]
         default:
             return state
+    }
+}
+
+function manageUserAndBot(state = {
+    botName: "Bot"
+}, action) {
+    switch(action.type) {
+        case "ADD_BOTNAME":
+        return {...state, botName: action.botName}
+    default:
+        return state
     }
 }
 
