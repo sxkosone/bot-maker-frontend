@@ -22,12 +22,10 @@ class BotScriptContainer extends React.Component {
 
   handleSubmit = (e) => {
     e.preventDefault()
-    const newArr = this.state.pairs.map(pair => {
-      //separate each answer to it's own string if find ;
-      if(typeof pair.response === "string") {
-        pair.response = pair.response.split(";")
-      }
-      return pair
+    const newArr = [...this.state.pairs].map(pair => {
+      //separate each answer to it's own string if find //
+      const newResponseArray = pair.response.split("//")
+      return {...pair, response: newResponseArray}
     })
     this.props.addNewPairs(newArr)
     localStorage.setItem("scripts", JSON.stringify(this.state.pairs))
@@ -49,7 +47,7 @@ class BotScriptContainer extends React.Component {
   render() {
     return (
       <div className="BotScriptContainer">
-        <p>Add some script to your bot. What "triggers" should the bot respond to? Separate responses with ";" (semicolon) to add multiple responses to the same trigger.</p>
+        <p>Add some script to your bot. What "triggers" should the bot respond to? Separate responses with "//" to add multiple responses to the same trigger.</p>
         <Form onSubmit={this.handleSubmit}>
         {this.state.pairs.map((pair, index) => <TriggerResponsePair key={index} index={index} pair={pair} handleEdits={this.handleEdits} addPair={this.props.addPair} delete={this.deleteTriggerResponsePair}/>)}
         <Button circular color="green" onClick={this.addNewTriggerResponsePair}>+</Button>
@@ -63,17 +61,16 @@ class BotScriptContainer extends React.Component {
 }
 
 const mapStateToProps = state => {
-  const stringScripts = state.scripts.map(pair => {
+  const stringScripts = [...state.scripts].map(pair => {
     console.log("current response:", pair.response)
-    if (typeof pair.response === "object") {
-      pair.response = pair.response.join(";")
-      console.log("modified pair is:", pair.response)
-    }
-    return pair
+    const responsesString = pair.response.join("//")
+    console.log("modified pair is:", responsesString)
+    console.log()
+    return {...pair, response: responsesString}
   })
+  
   return {
-    //new attempt at shape of state
-    scripts: state.scripts,
+
     stringifiedScripts: stringScripts,
     botName: state.userAndBot.botName
   }

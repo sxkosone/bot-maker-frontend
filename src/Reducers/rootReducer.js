@@ -12,16 +12,18 @@ function manageScript(state = [], action) {
     //stores an array of trigger-response objects
     console.log("received in the script reducer:", action)
     switch(action.type) {
-        case "ADD_NEW_PAIR":
-            const newTrigger = action.trigger
-            const newResponses = action.responses
-            const newPair = {trigger: newTrigger, response: newResponses}
-            return [...state, newPair]
         case "ADD_MANY_NEW_PAIRS":
             //take in an array of trigger-response objects, like this
-            //[{trigger:"hi", response: ["hii", "hi to you"]}, {trigger: "bye", responses: ["byebye", "bai"]}]
-            let newCleanPairs = action.newPairs.filter(pair => pair.trigger !== "")
-            return [...newCleanPairs]
+            //[{trigger:"hi", response: ["hii", "hi to you"]}, {trigger: "bye", response: ["byebye", "bai"]}]
+            let newCleanPairs = action.newPairs.filter(pair => pair.trigger)
+            newCleanPairs = newCleanPairs.map(pair => {
+                if(typeof pair.response === "string") {
+                    debugger
+                    pair.response = pair.response.split("//")
+                }
+                return pair
+            })
+            return newCleanPairs
         default:
             return state
     }
@@ -30,6 +32,8 @@ function manageScript(state = [], action) {
 function manageUserAndBot(state = {
     botName: ""
 }, action) {
+    console.log("received in the username and botname reducer:", action)
+
     switch(action.type) {
         case "ADD_BOTNAME":
         return {...state, botName: action.botName}

@@ -10,7 +10,7 @@ class Navbar extends React.Component {
         <Menu.Item as={NavLink} exact to="/">BotMaker</Menu.Item>
         <Menu.Item as={NavLink} exact to="/create">Create</Menu.Item>
         
-        <Menu.Item as={NavLink} to="/" position="right">Login</Menu.Item>
+        <Menu.Item as={NavLink} to="/login" position="right">Login</Menu.Item>
       </Menu>
     );
   }

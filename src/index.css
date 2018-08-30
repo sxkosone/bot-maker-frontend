@@ -60,3 +60,14 @@ body h1, h2, h3, p, a {
 .App {
   height: 100vh;
 }
+
+/*login and signup forms*/
+.LoginSignup {
+  display: flex;
+  min-height: 50%;
+}
+
+.LoginSignup form {
+  margin: auto;
+  width: 70%;
+}

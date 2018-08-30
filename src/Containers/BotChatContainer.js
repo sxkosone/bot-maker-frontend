@@ -1,8 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import cuid from 'cuid';
 import MessageHistory from './MessageHistory';
 import {Link} from 'react-router-dom';
 import { Form, Button } from 'semantic-ui-react';
+
 
 class BotChatContainer extends React.Component {
     state = {
@@ -34,9 +36,9 @@ class BotChatContainer extends React.Component {
             if(cleanTrigger === cleanUserMessage) {
                 //choose random response
                 //response will hold a string at this point, split it into parts
-                let responses = pair.response.split(";")
-                let randomI = Math.floor(Math.random()*responses.length);
-                botResponse = responses[randomI]
+                //let responses = pair.response.split("//")
+                let randomI = Math.floor(Math.random()*pair.response.length);
+                botResponse = pair.response[randomI]
             }
         })
         //push a new bot message into the state.messageHistory
@@ -44,6 +46,33 @@ class BotChatContainer extends React.Component {
             messageHistory: [...this.state.messageHistory, {sender: "bot", text: botResponse}]
         })
     } 
+
+    //testing fetch here
+    saveUserAndBot = () => {
+        console.log(this.props.scripts)
+        const user = {
+            username: "test2", 
+            bot_name: this.props.botName,
+            bot_url_id: cuid()
+            //still expecting triggers: [{text:"hi", responses: ["hi!", "hey"]}]
+        }
+        user.triggers = this.props.scripts.map(pair => {
+            //map array of response-strings to array of response-objects with a key of text
+            //const newResponses = pair.response.split("//").map(response => ( {text: response} ))
+            //new attempt at shape of state
+            const newResponses = pair.response.map(response => ( {text: response} ))
+            const newTrigger = { text: pair.trigger, responses: newResponses }
+            return newTrigger
+        })
+        console.log("user has this trigger-key", user.triggers)
+        fetch("http://localhost:3000/users", {
+            method: "POST",
+            headers: { "Content-Type": "application/json; charset=utf-8"},
+            body: JSON.stringify({"user": user})})
+            .then(r => r.json())
+            .then(console.log)
+            .catch(error => error.json()).then(console.log)
+    }
 
     render() {
         return(
@@ -57,6 +86,7 @@ class BotChatContainer extends React.Component {
                 </Form.Group>
             </Form>
             <Button as={ Link } to="/create">Back to the drawing board</Button>
+            <Button onClick={this.saveUserAndBot}>Awesome, save my bot to the database</Button>
         </div>
 
         )
