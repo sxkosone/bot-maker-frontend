@@ -28,7 +28,7 @@ class BotScriptContainer extends React.Component {
       return {...pair, response: newResponseArray}
     })
     this.props.addNewPairs(newArr)
-    localStorage.setItem("scripts", JSON.stringify(this.state.pairs))
+    //localStorage.setItem("scripts", JSON.stringify(this.state.pairs))
 
   }
 

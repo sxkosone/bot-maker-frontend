@@ -2,11 +2,14 @@ import React, { Component } from 'react';
 import {Route, Switch} from "react-router-dom";
 
 import Navbar from './Containers/Navbar';
-import WelcomeContainer from './Containers/WelcomeContainer'
-import BotMakerContainer from './Containers/BotMakerContainer'
+import WelcomeContainer from './Containers/WelcomeContainer';
+import BotMakerContainer from './Containers/BotMakerContainer';
 import BotChatContainer from './Containers/BotChatContainer';
-import LoginSignup from './Components/LoginSignup'
+import LoginSignup from './Components/LoginSignup';
+import UserPage from './Containers/UserPage';
+import BotPage from './Containers/BotPage';
 import './App.css';
+import SaveBotAndUser from './Components/SaveBotAndUser';
 
 
 class App extends Component {
@@ -19,6 +22,12 @@ class App extends Component {
           <Route path="/create" component={BotMakerContainer} />
           <Route path="/chat" component={BotChatContainer} />
           <Route path="/login" component={LoginSignup} />
+          <Route path="/my-page" component={UserPage} />
+          <Route path='/bots/:id' render={(props) => {
+            let botId = props.match.params.id
+            return <BotPage botId={botId}/>
+          }} />
+          <Route path="/save-bot" component={SaveBotAndUser} />
         </Switch>
       </div>
     );

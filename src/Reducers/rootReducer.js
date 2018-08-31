@@ -10,7 +10,7 @@ export default rootReducer;
 
 function manageScript(state = [], action) {
     //stores an array of trigger-response objects
-    console.log("received in the script reducer:", action)
+    //console.log("received in the script reducer:", action)
     switch(action.type) {
         case "ADD_MANY_NEW_PAIRS":
             //take in an array of trigger-response objects, like this
@@ -32,7 +32,7 @@ function manageScript(state = [], action) {
 function manageUserAndBot(state = {
     botName: ""
 }, action) {
-    console.log("received in the username and botname reducer:", action)
+    //console.log("received in the username and botname reducer:", action)
 
     switch(action.type) {
         case "ADD_BOTNAME":

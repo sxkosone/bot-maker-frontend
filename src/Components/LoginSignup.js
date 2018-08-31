@@ -1,5 +1,9 @@
 import React from 'react';
-import { Form, Button, Message } from 'semantic-ui-react';
+//import cuid from 'cuid'
+import { connect } from 'react-redux';
+import { Form, Button, Message, Tab } from 'semantic-ui-react';
+import { withRouter } from 'react-router-dom'
+
 
 const LOGIN_URL = "http://localhost:3000/login"
 
@@ -7,9 +11,13 @@ class LoginSignup extends React.Component {
     state = {
         username: "",
         password: "",
-        error: ""
+        error: "",
+        redirect: false,
+        signupFormPlease: false
     }
+
     login = () => {
+        console.log("logging in")
         let params = {
             username: this.state.username,
             password: this.state.password
@@ -26,32 +34,115 @@ class LoginSignup extends React.Component {
         .then(response => {
             if (response.success) {
                 localStorage.setItem("token", response.token);
-                this.setState({ error: "" });
+                console.log("received this response",response)
+                this.setState({ 
+                    error: "",
+                    redirect: true
+                });
+
             } else {
                 this.setState({ error: "Invalid username or password" });
             }
         })
+    }
+    signup = () => {
+        console.log("signing in...")
+        //first fetch ->, create a user with these credentials
+        //then fetch ->, log them in
+        //login function changes redirect to true and redirect to /my-page
+        this.createUserAndLogThemIn()
+        
+    }
+    signUpAndSaveBot = () => {
+        //if user has already some scripts, then also save scripts. Otherwise, just sign up and log in
+    }
+    
 
+    //save user to the backend
+    createUserAndLogThemIn = () => {
+        console.log("creating new user")
+        const user = {
+            username: this.state.username,
+            password: this.state.password
+        }
+        
+        fetch("http://localhost:3000/users", {
+            method: "POST",
+            headers: { "Content-Type": "application/json; charset=utf-8"},
+            body: JSON.stringify({"user": user})})
+            .then(r => r.json())
+            .then(console.log)
+            .then(this.login)
+            .catch(error => error.json()).then(console.log)
+    }
+
+    renderLoginForm() {
+        return(
+            <Form onSubmit={this.login}>
+            
+            <h2>Login</h2>
+            {this.state.error !== "" ? <p>{this.state.error}</p> : null}
+                <Form.Field>
+                <label>Username</label>
+                <input placeholder='First Name' value={this.state.username} onChange={(e) => this.setState({username: e.target.value})}/>
+                </Form.Field>
+                <Form.Field>
+                <label>Password</label>
+                <input placeholder='Password' value={this.state.password} onChange={(e) => this.setState({password: e.target.value})}/>
+                </Form.Field>
+                <Button type='submit'>Login</Button>
+                {/* <Button secondary onClick={() => this.setState({signupFormPlease: true})}>Signup</Button> */}
+            </Form>
+        )
+    }
+
+    renderSignUpForm() {
+        return (
+            <Form onSubmit={this.signup}>
+            <h2>Sign up</h2>
+                {this.state.error !== "" ? <Message error header='Oh no!' content={this.state.error} /> : null}
+                <Form.Field>
+                <label>Username</label>
+                <input placeholder='First Name' value={this.state.username} onChange={(e) => this.setState({username: e.target.value})}/>
+                </Form.Field>
+                <Form.Field>
+                <label>Password</label>
+                <input placeholder='Password' value={this.state.password} onChange={(e) => this.setState({password: e.target.value})}/>
+                </Form.Field>
+                <Button type='submit'>Signup</Button>
+                {/* <Button secondary onClick={() => this.setState({signupFormPlease: false})}>Login</Button> */}
+            </Form>
+        )
+    }
+
+    renderPanes = () =>{
+        return [{menuItem: "Login", render: () => this.renderLoginForm()}, {menuItem: "Signup", render: () => this.renderSignUpForm()}]
+    }
+
+    //redirect logged in users to their userpage
+    renderRedirect = () => {
+        if (this.state.redirect) {
+            //return <Redirect to='/my-page' /> //old version
+            this.props.history.goBack()
+            //this.context.history.goBack()
+        }
     }
 
     render() {
         return(
         <div className="LoginSignup">
-        <Form onSubmit={this.login}>
-            {this.state.error ? <Message error header='Oh no!' content={this.state.error} /> : null}
-            <Form.Field>
-            <label>Username</label>
-            <input placeholder='First Name' value={this.state.username} onChange={(e) => this.setState({username: e.target.value})}/>
-            </Form.Field>
-            <Form.Field>
-            <label>Password</label>
-            <input placeholder='Password' value={this.state.password} onChange={(e) => this.setState({password: e.target.value})}/>
-            </Form.Field>
-            <Button type='submit'>Login</Button>
-        </Form>
+        {this.renderRedirect()}
+        <Tab panes={this.renderPanes()} />
         </div>
         )
     }
 }
 
-export default LoginSignup;
+const mapStateToProps = state => {
+    const nonEmptyScripts = state.scripts.length !== 0
+    return {
+        alreadyCreatedBot: nonEmptyScripts
+    }
+}
+
+export default withRouter(connect(mapStateToProps)(LoginSignup));
