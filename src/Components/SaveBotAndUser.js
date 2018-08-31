@@ -70,8 +70,9 @@ class SaveBotAndUser extends React.Component {
     render() {
         return(
             <div>
-            {this.redirectToUserPage()}
+            
             {localStorage.getItem("token") ? this.saveBotForLoggedInUser() : this.redirectToLogin()}
+            {this.redirectToUserPage()}
             </div>
         )
     }
