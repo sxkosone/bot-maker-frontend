@@ -122,9 +122,7 @@ class LoginSignup extends React.Component {
     //redirect logged in users to their userpage
     renderRedirect = () => {
         if (this.state.redirect) {
-            //return <Redirect to='/my-page' /> //old version
             this.props.history.goBack()
-            //this.context.history.goBack()
         }
     }
 
