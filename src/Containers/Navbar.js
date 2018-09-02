@@ -15,12 +15,16 @@ class Navbar extends React.Component {
   renderLoginLogout = () => {
     return localStorage.getItem("token") ? <Menu.Item onClick={this.logout} position="right">Log out</Menu.Item> : <Menu.Item as={NavLink} to="/login" position="right">Login</Menu.Item>
   }
+  renderMyPageOrCreate = () => {
+    return localStorage.getItem("token") ? <Menu.Item as={NavLink} exact to="/my-page">My Bot</Menu.Item> : <Menu.Item as={NavLink} exact to="/create">Create</Menu.Item>
+  }
   render() {
     return (
       <Menu className="Navbar">
         
         <Menu.Item as={NavLink} exact to="/">BotMaker</Menu.Item>
-        <Menu.Item as={NavLink} exact to="/create">Create</Menu.Item>
+        {this.renderMyPageOrCreate()}
+        
         {this.renderLoginLogout()}
       </Menu>
     );

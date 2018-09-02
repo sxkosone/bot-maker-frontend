@@ -5,30 +5,29 @@ import { Form } from 'semantic-ui-react';
 
 class BotMakerContainer extends React.Component {
   state = {
-    nameInput: ""
+    nameInput: this.props.botName
   }
   handleChange = (e) => {
     this.setState({
       nameInput: e.target.value
     })
   }
-  handleSubmit = (e) => {
-    e.preventDefault()
+  handleSubmit = () => {
+    //e.preventDefault()
     this.props.giveBotName(this.state.nameInput)
   }
   render() {
     return (
       <div className="BotMakerContainer">
-        <BotScriptContainer />
-        {/* where will this container end up in the final view? should i make own route? */}
-        {/* <BotChatContainer /> */}
+
         Name your bot!
-        <Form onSubmit={this.handleSubmit}>
-        <Form.Group>
+        {/* <Form onSubmit={this.handleSubmit}>
+        <Form.Group> */}
           <Form.Input type="text" value={this.state.nameInput} onChange={this.handleChange}/>
-          <Form.Input type="submit" value="name!"/>
-          </Form.Group>
-        </Form>
+          {/* <Form.Input type="submit" value="name!"/>
+          </Form.Group> */}
+        {/* </Form> */}
+        <BotScriptContainer nameBot={this.handleSubmit}/>
       </div>
     );
   }
@@ -40,4 +39,10 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-export default connect(null, mapDispatchToProps)(BotMakerContainer);
+const mapStateToProps = state => {
+  return {
+    botName: state.userAndBot.botName
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(BotMakerContainer);

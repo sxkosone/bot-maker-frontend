@@ -25,11 +25,12 @@ class SaveBotAndUser extends React.Component {
             .then(r => r.json())
             .then(userObj => {
                 
-                console.log("got back from backend this user", userObj, "with these scripts:", this.props.scripts)
+                console.log("got back from backend this user", userObj)
+                
                 const user = {
                     username: userObj.username, 
                     bot_name: this.props.botName,
-                    bot_url_id: cuid()
+                    bot_url_id: userObj.bot_url_id ? userObj.bot_url_id : cuid()
                     //expecting triggers: [{text:"hi", responses: ["hi!", "hey"]}]
                 }
                 user.triggers = this.props.scripts.map(pair => {
@@ -38,7 +39,6 @@ class SaveBotAndUser extends React.Component {
                     const newTrigger = { text: pair.trigger, responses: newResponses }
                     return newTrigger
                 })
-                //console.log("user has these triggers", user.triggers)
                 fetch(`http://localhost:3000/users/${userObj.id}`, {
                     method: "PATCH",
                     headers: { "Content-Type": "application/json; charset=utf-8"},
@@ -56,8 +56,11 @@ class SaveBotAndUser extends React.Component {
         }
     }
     redirectToLogin = () => {
-        //you may have to change this to redirect to LoginSignup, so that you can user the goBack()
-        //return <div><h1> Login or sign up to save your bot!</h1> <LoginSignup /></div>
+        var saveState = {
+            goal: "successfully redirect user to login and back to save page"
+          };
+           
+        window.history.pushState(saveState, "", "save-bot");
         return <Redirect to='/login' />
     }
 
@@ -68,11 +71,12 @@ class SaveBotAndUser extends React.Component {
     }
 
     render() {
+        console.log("in the /save-bot page!")
         return(
             <div>
-            
-            {localStorage.getItem("token") ? this.saveBotForLoggedInUser() : this.redirectToLogin()}
             {this.redirectToUserPage()}
+            {localStorage.getItem("token") ? this.saveBotForLoggedInUser() : this.redirectToLogin()}
+            
             </div>
         )
     }
