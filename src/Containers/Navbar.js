@@ -7,6 +7,7 @@ class Navbar extends React.Component {
     loggedIn: localStorage.getItem("token")
   }
   logout = () => {
+    //Should I TODO?: dispatch an action to clear the current user and bot from app's state
     localStorage.clear()
     this.setState({
       loggedIn: false

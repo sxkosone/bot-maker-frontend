@@ -20,13 +20,9 @@ class BotMakerContainer extends React.Component {
     return (
       <div className="BotMakerContainer">
 
-        Name your bot!
-        {/* <Form onSubmit={this.handleSubmit}>
-        <Form.Group> */}
-          <Form.Input type="text" value={this.state.nameInput} onChange={this.handleChange}/>
-          {/* <Form.Input type="submit" value="name!"/>
-          </Form.Group> */}
-        {/* </Form> */}
+        <h2>Botname</h2>
+        <Form.Input type="text" value={this.state.nameInput} onChange={this.handleChange}/>
+        <h2>Scripts</h2>
         <BotScriptContainer nameBot={this.handleSubmit}/>
       </div>
     );

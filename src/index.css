@@ -9,47 +9,11 @@ body h1, h2, h3, p, a {
   font-family: "Work Sans", sans-serif;
 }
 
-.bot-message {
+/* .bot-message.speech-bubble {
   text-align: left;
   background: #889cbf;
-}
+} */
 
-.speech-bubble {
-	position: relative;
-	background: #01befd;
-  border-radius: .2em;
-  padding: 0.2em
-}
-
-.human-message.speech-bubble:after {
-	content: '';
-	position: absolute;
-	right: 0;
-	top: 50%;
-	width: 0;
-	height: 0;
-	border: 8px solid transparent;
-	border-left-color: #01befd;
-	border-right: 0;
-	border-top: 0;
-	margin-top: -4px;
-	margin-right: -8px;
-}
-
-.bot-message.speech-bubble:after {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 50%;
-    width: 0;
-    height: 0;
-    border: 8px solid transparent;
-    border-right-color: #01befd;
-    border-left: 0;
-    border-top: 0;
-    margin-top: -4px;
-    margin-left: -8px;
-  }
 
 .human-message {
   text-align: right;

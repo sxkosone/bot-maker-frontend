@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {Route, Switch} from "react-router-dom";
+import './App.css';
 
 import Navbar from './Containers/Navbar';
 import WelcomeContainer from './Containers/WelcomeContainer';
@@ -8,8 +9,8 @@ import BotChatContainer from './Containers/BotChatContainer';
 import LoginSignup from './Components/LoginSignup';
 import UserPage from './Containers/UserPage';
 import BotPage from './Containers/BotPage';
-import './App.css';
 import SaveBotAndUser from './Components/SaveBotAndUser';
+import EditUsersBot from './Containers/EditUsersBot';
 
 
 class App extends Component {
@@ -28,6 +29,7 @@ class App extends Component {
             return <BotPage botId={botId}/>
           }} />
           <Route path="/save-bot" component={SaveBotAndUser} />
+          <Route path="/edit-bot" component={EditUsersBot} />
         </Switch>
       </div>
     );

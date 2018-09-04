@@ -16,13 +16,14 @@ function manageScript(state = [], action) {
             //take in an array of trigger-response objects, like this
             //[{trigger:"hi", response: ["hii", "hi to you"]}, {trigger: "bye", response: ["byebye", "bai"]}]
             let newCleanPairs = action.newPairs.filter(pair => pair.trigger)
-            newCleanPairs = newCleanPairs.map(pair => {
-                if(typeof pair.response === "string") {
-                    debugger
-                    pair.response = pair.response.split("//")
-                }
-                return pair
-            })
+            //this operation should be now unnecessary since the pairs are already formatted correctly to hold strings
+            // newCleanPairs = newCleanPairs.map(pair => {
+            //     if(typeof pair.response === "string") {
+            //         debugger
+            //         pair.response = pair.response.split("//")
+            //     }
+            //     return pair
+            // })
             return newCleanPairs
         default:
             return state
@@ -30,14 +31,17 @@ function manageScript(state = [], action) {
 }
 
 function manageUserAndBot(state = {
-    botName: ""
+    botName: "",
+    currentUser: null
 }, action) {
-    //console.log("received in the username and botname reducer:", action)
-
     switch(action.type) {
         case "ADD_BOTNAME":
-        return {...state, botName: action.botName}
-    default:
-        return state
+            return {...state, botName: action.botName}
+        case "LOG_IN":
+            return {...state, currentUser: action.currentUser}
+        case "LOG_OUT":
+            return {...state, currentUser: null}
+        default:
+            return state
     }
 }

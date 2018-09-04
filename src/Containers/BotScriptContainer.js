@@ -65,21 +65,19 @@ class BotScriptContainer extends React.Component {
         <Button circular color="green" onClick={this.addNewTriggerResponsePair}><h1>+</h1></Button>
         <Button type="submit">Save Script and go to chat with bot</Button>
         </Form>
-        {/* <Button primary as={Link} to="/chat">{this.props.botName==="" ? "Bot" : this.props.botName} is ready, let's chat!</Button> */}
-
       </div>
     );
   }
 }
 
 const mapStateToProps = state => {
+  //map the state to copy all scripts to the input fields
   const stringScripts = [...state.scripts].map(pair => {
     const responsesString = pair.response.join("//")
     return {...pair, response: responsesString}
   })
   
   return {
-
     stringifiedScripts: stringScripts,
     botName: state.userAndBot.botName
   }
@@ -87,7 +85,6 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    //new attempt at shape of state
     addNewPairs: (array) => dispatch({type: "ADD_MANY_NEW_PAIRS", newPairs: array})
   }
 }

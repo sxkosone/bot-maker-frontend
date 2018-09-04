@@ -1,4 +1,6 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+import { Button } from 'semantic-ui-react';
 
 const USER_URL = "http://localhost:3000/user"
 
@@ -30,7 +32,8 @@ class UserPage extends React.Component {
                 {this.state.user ? (
                     <div>
                         <h2>Welcome, {this.state.user.username}!</h2>
-                        <p>Your bot {this.state.user.bot_name} lives here: www.botmaker.com/bots/{this.state.user.bot_url_id}</p>
+                        <h3>Your bot {this.state.user.bot_name} lives here: <Link to={`/bots/${this.state.user.bot_url_id}`}>www.botmaker.com/bots/{this.state.user.bot_url_id}</Link></h3>
+                        <Button as={Link} to="/edit-bot">Edit your bot</Button>
                     </div>
                 ) : <h2>You must login first</h2>}
             </div>

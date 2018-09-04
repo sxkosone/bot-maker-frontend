@@ -12,9 +12,14 @@ class SaveBotAndUser extends React.Component {
         botReady: false
     }
 
-    saveBotForLoggedInUser = () => {
+    componentDidMount() {
+        this.saveBotForLoggedInUser()
+    }
 
+    saveBotForLoggedInUser = () => {
+        debugger
         let token = localStorage.getItem("token")
+        //check if user is logged in
         if (token) {
             console.log("in the user fetch")
             fetch(USER_URL, {
@@ -24,9 +29,9 @@ class SaveBotAndUser extends React.Component {
             })
             .then(r => r.json())
             .then(userObj => {
-                
+                //TODO dispatch an action to state to update current user info!!
                 console.log("got back from backend this user", userObj)
-                
+                this.props.setCurrentUser(userObj)
                 const user = {
                     username: userObj.username, 
                     bot_name: this.props.botName,
@@ -52,7 +57,6 @@ class SaveBotAndUser extends React.Component {
                     })
                     
             })
-            
         }
     }
     redirectToLogin = () => {
@@ -75,7 +79,7 @@ class SaveBotAndUser extends React.Component {
         return(
             <div>
             {this.redirectToUserPage()}
-            {localStorage.getItem("token") ? this.saveBotForLoggedInUser() : this.redirectToLogin()}
+            {localStorage.getItem("token") ? null : this.redirectToLogin()}
             
             </div>
         )
@@ -85,8 +89,17 @@ class SaveBotAndUser extends React.Component {
 const mapStateToProps = state => {
     return  {
         scripts: state.scripts,
-        botName: state.userAndBot.botName
+        botName: state.userAndBot.botName,
+        currentUser: state.userAndBot.currentUser
     }
 }
 
-export default connect(mapStateToProps)(SaveBotAndUser)
+const mapDispatchToProps = dispatch => {
+    return {
+        setCurrentUser: (currentUser) => dispatch({ type: "LOG_IN", currentUser: currentUser })
+    }
+}
+
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(SaveBotAndUser)

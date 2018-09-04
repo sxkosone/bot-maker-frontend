@@ -12,8 +12,7 @@ class LoginSignup extends React.Component {
         username: "",
         password: "",
         error: "",
-        redirect: false,
-        signupFormPlease: false
+        redirect: false
     }
 
     login = () => {
@@ -35,6 +34,8 @@ class LoginSignup extends React.Component {
             if (response.success) {
                 localStorage.setItem("token", response.token);
                 console.log("received this response",response)
+                //probably not necessary here, because doesn't have scripts at this point.
+                //this.props.setCurrentUser(response.current_user)
                 this.setState({ 
                     error: "",
                     redirect: true
@@ -91,7 +92,6 @@ class LoginSignup extends React.Component {
                 <input placeholder='Password' value={this.state.password} onChange={(e) => this.setState({password: e.target.value})}/>
                 </Form.Field>
                 <Button type='submit'>Login</Button>
-                {/* <Button secondary onClick={() => this.setState({signupFormPlease: true})}>Signup</Button> */}
             </Form>
         )
     }
@@ -110,7 +110,6 @@ class LoginSignup extends React.Component {
                 <input placeholder='Password' value={this.state.password} onChange={(e) => this.setState({password: e.target.value})}/>
                 </Form.Field>
                 <Button type='submit'>Signup</Button>
-                {/* <Button secondary onClick={() => this.setState({signupFormPlease: false})}>Login</Button> */}
             </Form>
         )
     }
@@ -136,11 +135,19 @@ class LoginSignup extends React.Component {
     }
 }
 
-const mapStateToProps = state => {
-    const nonEmptyScripts = state.scripts.length !== 0
+//NOT USED AT THE MOMENT!!! DELETE?
+// const mapStateToProps = state => {
+//     
+//     // const nonEmptyScripts = state.scripts.length !== 0
+//     // return {
+//     //     alreadyCreatedBot: nonEmptyScripts
+//     // }
+// }
+
+const mapDispatchToProps = dispatch => {
     return {
-        alreadyCreatedBot: nonEmptyScripts
+        setCurrentUser: (current) => dispatch({ type: "LOG_IN", currentUser: current })
     }
 }
 
-export default withRouter(connect(mapStateToProps)(LoginSignup));
+export default withRouter(connect(null, mapDispatchToProps)(LoginSignup));
