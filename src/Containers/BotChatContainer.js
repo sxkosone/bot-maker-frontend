@@ -57,8 +57,10 @@ class BotChatContainer extends React.Component {
                 <Form.Input type="submit" value="Send" />
                 </Form.Group>
             </Form>
-            <Button as={ Link } to="/create">Back to the drawing board</Button>
-            <Button as={ Link } to="/save-bot">Awesome, save my bot to the database</Button>
+            <div className="Buttons">
+                <Button primary as={ Link } to="/create">Back to the drawing board</Button>
+                <Button color="green" as={ Link } to="/save-bot">My bot is ready</Button>
+            </div>
         </div>
 
         )

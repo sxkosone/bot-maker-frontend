@@ -34,8 +34,8 @@ class LoginSignup extends React.Component {
             if (response.success) {
                 localStorage.setItem("token", response.token);
                 console.log("received this response",response)
-                //probably not necessary here, because doesn't have scripts at this point.
-                //this.props.setCurrentUser(response.current_user)
+                //used currently to tell navbar to rerender
+                this.props.setCurrentUser(response.current_user)
                 this.setState({ 
                     error: "",
                     redirect: true
@@ -91,7 +91,7 @@ class LoginSignup extends React.Component {
                 <label>Password</label>
                 <input placeholder='Password' value={this.state.password} onChange={(e) => this.setState({password: e.target.value})}/>
                 </Form.Field>
-                <Button type='submit'>Login</Button>
+                <Button inverted type='submit'>Login</Button>
             </Form>
         )
     }
@@ -109,7 +109,7 @@ class LoginSignup extends React.Component {
                 <label>Password</label>
                 <input placeholder='Password' value={this.state.password} onChange={(e) => this.setState({password: e.target.value})}/>
                 </Form.Field>
-                <Button type='submit'>Signup</Button>
+                <Button inverted color="green" type='submit'>Signup</Button>
             </Form>
         )
     }
@@ -127,7 +127,8 @@ class LoginSignup extends React.Component {
 
     render() {
         return(
-        <div className="LoginSignup">
+        <div className="LoginSignup content">
+        {this.props.info !== "" ? <Message color="violet">{this.props.info}</Message> : null}
         {this.renderRedirect()}
         <Tab panes={this.renderPanes()} />
         </div>
@@ -150,4 +151,10 @@ const mapDispatchToProps = dispatch => {
     }
 }
 
-export default withRouter(connect(null, mapDispatchToProps)(LoginSignup));
+const mapStateToProps = state => {
+    return {
+        info: state.messages.info
+    }
+}
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(LoginSignup));

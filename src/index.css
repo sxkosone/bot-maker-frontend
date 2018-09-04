@@ -2,17 +2,22 @@ body {
   margin: 0;
   padding: 0;
   background-color: #21D4FD;
-  background-image: linear-gradient(19deg, #21D4FD 0%, #B721FF 100%);
+  background-image: linear-gradient(19deg, #21D4FD 0%, #B721FF 100%); 
 }
+
+.EditUsersBot.content {
+  padding: 0.8rem;
+  background: rgb(33,212,253);
+  background: radial-gradient(circle, rgba(33,212,253,1) 0%, rgba(183,33,255,1) 100%);
+} 
 
 body h1, h2, h3, p, a {
   font-family: "Work Sans", sans-serif;
 }
 
-/* .bot-message.speech-bubble {
-  text-align: left;
-  background: #889cbf;
-} */
+.content {
+  padding: 0 0.8rem;
+}
 
 
 .human-message {
@@ -20,7 +25,15 @@ body h1, h2, h3, p, a {
 }
 
 .BotMakerContainer {
-  padding: 1rem;
+  /* padding: 1rem; */
+}
+
+.equal.with.fields {
+  display: flex
+}
+
+.delete.icon {
+  margin: auto
 }
 
 .botChatContainer {
@@ -69,11 +82,15 @@ body h1, h2, h3, p, a {
 
 /*login and signup forms*/
 .LoginSignup {
-  display: flex;
   min-height: 50%;
 }
 
 .LoginSignup form {
   margin: auto;
   /* width: 70%; */
+}
+
+/*USER INFO PAGE*/
+.shareLink .input {
+  width: 100%;
 }

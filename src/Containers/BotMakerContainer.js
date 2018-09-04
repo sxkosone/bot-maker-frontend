@@ -18,7 +18,7 @@ class BotMakerContainer extends React.Component {
   }
   render() {
     return (
-      <div className="BotMakerContainer">
+      <div className="BotMakerContainer content">
 
         <h2>Botname</h2>
         <Form.Input type="text" value={this.state.nameInput} onChange={this.handleChange}/>

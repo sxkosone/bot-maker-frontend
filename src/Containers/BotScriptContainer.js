@@ -1,7 +1,7 @@
 import React from 'react';
 import TriggerResponsePair from '../Components/TriggerResponsePair';
 import { connect } from 'react-redux';
-import {Link, Redirect } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import { Form, Button } from 'semantic-ui-react';
 
 class BotScriptContainer extends React.Component {
@@ -62,8 +62,8 @@ class BotScriptContainer extends React.Component {
         <p>Add some script to your bot. What "triggers" should the bot respond to? Separate responses with "//" to add multiple responses to the same trigger.</p>
         <Form onSubmit={this.handleSubmit}>
         {this.state.pairs.map((pair, index) => <TriggerResponsePair key={index} index={index} pair={pair} handleEdits={this.handleEdits} addPair={this.props.addPair} delete={this.deleteTriggerResponsePair}/>)}
-        <Button circular color="green" onClick={this.addNewTriggerResponsePair}><h1>+</h1></Button>
-        <Button type="submit">Save Script and go to chat with bot</Button>
+        <Button circular color="green" onClick={this.addNewTriggerResponsePair}><h1>+</h1></Button>add a new trigger
+        <Button color="blue" type="submit">Save Script and go to chat with bot</Button>
         </Form>
       </div>
     );

@@ -8,10 +8,16 @@ class WelcomeContainer extends React.Component {
       <div className="WelcomeContainer">
       <div id="WelcomeContent">
         <h1>Build your own chatbot</h1>
-        <div className="Buttons">
-          <Button inverted secondary as={ Link }to="/create">Start building</Button>
-          <Button inverted as={ Link } to="/login">Log in</Button>
-        </div>
+        
+          
+          {localStorage.getItem("token") ? <div className="Buttons">
+          <Button size='huge' inverted secondary as={ Link }to="/my-page">Visit your bot</Button>
+          </div> : 
+          <div className="Buttons">
+          <Button size='huge' inverted secondary as={ Link }to="/create">Start building</Button>
+          <Button size='huge' inverted as={ Link } to="/login">Log in</Button>
+          </div>}
+        
         </div>
       </div>
     );

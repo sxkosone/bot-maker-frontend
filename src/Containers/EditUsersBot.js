@@ -43,7 +43,8 @@ class EditUsersBot extends React.Component {
 
     render() {
         return(
-            <div className="EditUsersBot">Edit your bot
+            <div className="EditUsersBot content">
+            <h1>Edit Bot</h1>
                 {this.state.scriptsReady ? <BotMakerContainer /> : null}
             </div>
         )
@@ -55,10 +56,6 @@ const mapDispatchToProps = dispatch => {
         addScriptsFromBackendToState: (scripts) => dispatch({ type: "ADD_MANY_NEW_PAIRS", newPairs: scripts }),
         addNameFromBackendToState: (name) => dispatch({ type: "ADD_BOTNAME", botName: name })
     }
-}
-
-const mapStateToProps = state => {
-
 }
 
 export default connect(null, mapDispatchToProps)(EditUsersBot);

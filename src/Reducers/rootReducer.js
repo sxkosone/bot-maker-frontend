@@ -3,7 +3,8 @@ import { combineReducers } from "redux";
 
 const rootReducer = combineReducers({
     scripts: manageScript,
-    userAndBot: manageUserAndBot
+    userAndBot: manageUserAndBot,
+    messages: manageMessages
 });
 
 export default rootReducer;
@@ -41,6 +42,24 @@ function manageUserAndBot(state = {
             return {...state, currentUser: action.currentUser}
         case "LOG_OUT":
             return {...state, currentUser: null}
+        default:
+            return state
+    }
+}
+
+function manageMessages(state= {
+    error: "",
+    info: ""
+}, action) {
+    switch(action.type) {
+        case "ADD_ERROR_MESSAGE":
+            return {...state, error: state.error.concat(action.error)}
+        case "ERASE_ERROR_MESSAGE":
+            return {...state, error: ""}
+        case "ADD_INFO_MESSAGE":
+            return {...state, info: action.info}
+        case "ERASE_INFO_MESSAGE":
+            return {...state, info: ""}
         default:
             return state
     }

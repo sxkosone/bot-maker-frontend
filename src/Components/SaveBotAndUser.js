@@ -1,8 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import cuid from 'cuid';
-//may need redirecting
-//import LoginSignup from './LoginSignup';
 import { Redirect } from 'react-router-dom'
 
 const USER_URL = "http://localhost:3000/user"
@@ -17,7 +15,6 @@ class SaveBotAndUser extends React.Component {
     }
 
     saveBotForLoggedInUser = () => {
-        debugger
         let token = localStorage.getItem("token")
         //check if user is logged in
         if (token) {
@@ -29,7 +26,7 @@ class SaveBotAndUser extends React.Component {
             })
             .then(r => r.json())
             .then(userObj => {
-                //TODO dispatch an action to state to update current user info!!
+                //dispatch an action to state to update current user info!!
                 console.log("got back from backend this user", userObj)
                 this.props.setCurrentUser(userObj)
                 const user = {
@@ -60,6 +57,7 @@ class SaveBotAndUser extends React.Component {
         }
     }
     redirectToLogin = () => {
+        this.props.addInfoMessage("Login or sign up to save your bot")
         var saveState = {
             goal: "successfully redirect user to login and back to save page"
           };
@@ -70,12 +68,15 @@ class SaveBotAndUser extends React.Component {
 
     redirectToUserPage = () => {
         if(this.state.botReady) {
+            this.props.addInfoMessage("Successfully saved your bot!")
+            //set a timeout to dispatch an action to clear info message!
+            setTimeout(this.props.clearInfoMessage, 5000)
             return <Redirect to='/my-page' />
         }
     }
 
     render() {
-        console.log("in the /save-bot page!")
+        console.log("rendering the /save-bot page!")
         return(
             <div>
             {this.redirectToUserPage()}
@@ -96,7 +97,9 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        setCurrentUser: (currentUser) => dispatch({ type: "LOG_IN", currentUser: currentUser })
+        setCurrentUser: (currentUser) => dispatch({ type: "LOG_IN", currentUser: currentUser }),
+        addInfoMessage: (message) => dispatch({ type: "ADD_INFO_MESSAGE", info: message}),
+        clearInfoMessage: () => dispatch({ type: "ERASE_INFO_MESSAGE" })
     }
 }
 
