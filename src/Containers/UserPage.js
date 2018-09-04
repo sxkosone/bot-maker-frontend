@@ -8,7 +8,8 @@ const USER_URL = "http://localhost:3000/user"
 
 class UserPage extends React.Component {
     state = {
-        user: this.props.currentUser//used to be localStorage.getItem("token")
+        user: this.props.currentUser,//used to be localStorage.getItem("token")
+        copied: false
     }
 
     componentDidMount() {
@@ -40,6 +41,10 @@ class UserPage extends React.Component {
     copyToClipboard = () => {
         let link = `www.botmaker.com/bots/${this.state.user.bot_url_id}`
         console.log(link)
+        this.setState({
+            copied: true
+        })
+        //setTimeout(this.setState({copied: false}), 5000) //do you need this
         
     }
 
@@ -60,10 +65,10 @@ class UserPage extends React.Component {
                         <Form.Input className="shareLink" value={`www.botmaker.com/bots/${this.state.user.bot_url_id}`}>
                             <input />
                             <CopyToClipboard text={`www.botmaker.com/bots/${this.state.user.bot_url_id}`}>
-                                <Icon name="copy"/>
+                                <Icon name="copy" onClick={this.copyToClipboard}/>
                             </CopyToClipboard>
-                            
                         </Form.Input>
+                        {this.state.copied ? <p>Link copied to clipboard!</p> : null}
                     </div>
                 ) : localStorage.getItem("token") ? null : <Redirect to="/login" />}
             </div>
