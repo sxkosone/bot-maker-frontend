@@ -40,7 +40,7 @@ class BotPage extends React.Component {
         }).then(r => r.json()).then(answer => {
             console.log(answer)
             this.setState({
-                messageHistory: [...this.state.messageHistory, {sender: "bot", text: answer.answer.text}]
+                messageHistory: [...this.state.messageHistory, {sender: "bot", text: answer.text}]
             })
         })
     }
