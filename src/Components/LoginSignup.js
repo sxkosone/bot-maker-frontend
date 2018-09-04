@@ -72,9 +72,17 @@ class LoginSignup extends React.Component {
             headers: { "Content-Type": "application/json; charset=utf-8"},
             body: JSON.stringify({"user": user})})
             .then(r => r.json())
-            .then(console.log)
-            .then(this.login)
-            .catch(error => error.json()).then(console.log)
+            .then(response => {
+                if(response.success) {
+                    this.login
+                } else {
+                    this.setState({
+                        error: Object.keys(response.errors)[0]+" "+response.errors.username[0]
+                    })
+                }
+            })
+            // .then(this.login)
+            // .catch(error => error.json()).then(console.log)
     }
 
     renderLoginForm() {
@@ -82,14 +90,14 @@ class LoginSignup extends React.Component {
             <Form onSubmit={this.login}>
             
             <h2>Login</h2>
-            {this.state.error !== "" ? <p>{this.state.error}</p> : null}
+            
                 <Form.Field>
                 <label>Username</label>
-                <input placeholder='First Name' value={this.state.username} onChange={(e) => this.setState({username: e.target.value})}/>
+                <input type="text" placeholder='First Name' value={this.state.username} onChange={(e) => this.setState({username: e.target.value})} required/>
                 </Form.Field>
                 <Form.Field>
                 <label>Password</label>
-                <input placeholder='Password' value={this.state.password} onChange={(e) => this.setState({password: e.target.value})}/>
+                <input type="password" placeholder='Password' value={this.state.password} onChange={(e) => this.setState({password: e.target.value})} required/>
                 </Form.Field>
                 <Button inverted type='submit'>Login</Button>
             </Form>
@@ -100,14 +108,13 @@ class LoginSignup extends React.Component {
         return (
             <Form onSubmit={this.signup}>
             <h2>Sign up</h2>
-                {this.state.error !== "" ? <Message error header='Oh no!' content={this.state.error} /> : null}
                 <Form.Field>
                 <label>Username</label>
-                <input placeholder='First Name' value={this.state.username} onChange={(e) => this.setState({username: e.target.value})}/>
+                <input type="text" placeholder='First Name' value={this.state.username} onChange={(e) => this.setState({username: e.target.value})} required/>
                 </Form.Field>
                 <Form.Field>
                 <label>Password</label>
-                <input placeholder='Password' value={this.state.password} onChange={(e) => this.setState({password: e.target.value})}/>
+                <input type="password" placeholder='Password' value={this.state.password} onChange={(e) => this.setState({password: e.target.value})} required/>
                 </Form.Field>
                 <Button inverted color="green" type='submit'>Signup</Button>
             </Form>
@@ -130,30 +137,24 @@ class LoginSignup extends React.Component {
         <div className="LoginSignup content">
         {this.props.info !== "" ? <Message color="violet">{this.props.info}</Message> : null}
         {this.renderRedirect()}
+        {this.state.error !== "" ? <p>{this.state.error}</p> : null}
         <Tab panes={this.renderPanes()} />
         </div>
         )
     }
 }
 
-//NOT USED AT THE MOMENT!!! DELETE?
-// const mapStateToProps = state => {
-//     
-//     // const nonEmptyScripts = state.scripts.length !== 0
-//     // return {
-//     //     alreadyCreatedBot: nonEmptyScripts
-//     // }
-// }
-
 const mapDispatchToProps = dispatch => {
     return {
-        setCurrentUser: (current) => dispatch({ type: "LOG_IN", currentUser: current })
+        setCurrentUser: (current) => dispatch({ type: "LOG_IN", currentUser: current }),
+        addErrorMessage: (message) => dispatch({ type: "ADD_ERROR_MESSAGE", error: message })
     }
 }
 
 const mapStateToProps = state => {
     return {
-        info: state.messages.info
+        info: state.messages.info,
+        error: state.messages.error
     }
 }
 

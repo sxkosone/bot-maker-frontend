@@ -53,7 +53,7 @@ function manageMessages(state= {
 }, action) {
     switch(action.type) {
         case "ADD_ERROR_MESSAGE":
-            return {...state, error: state.error.concat(action.error)}
+            return {...state, error: action.error}
         case "ERASE_ERROR_MESSAGE":
             return {...state, error: ""}
         case "ADD_INFO_MESSAGE":
