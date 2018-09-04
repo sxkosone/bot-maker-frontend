@@ -1,7 +1,8 @@
 import React from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { Button, Form, Message, Icon } from 'semantic-ui-react';
+import { Button, Form, Message, Icon, Popup } from 'semantic-ui-react';
+import {CopyToClipboard} from 'react-copy-to-clipboard';
 
 const USER_URL = "http://localhost:3000/user"
 
@@ -27,7 +28,6 @@ class UserPage extends React.Component {
             .catch(e => e.json()).then(console.log)
         } 
         else {
-            debugger
             this.props.addInfoMessage("Login or sign up to view your bot")
             this.setState({
                 user: null
@@ -56,8 +56,14 @@ class UserPage extends React.Component {
                          
                         <Button color="blue" as={Link} to="/edit-bot">Edit your bot</Button>
                         <h2>Share {this.state.user.bot_name} to the world</h2>
-                        <Icon name="copy" onClick={this.copyToClipboard}/>
-                        <Form.Input className="shareLink" value={`www.botmaker.com/bots/${this.state.user.bot_url_id}`}></Form.Input>
+                        
+                        <Form.Input className="shareLink" value={`www.botmaker.com/bots/${this.state.user.bot_url_id}`}>
+                            <input />
+                            <CopyToClipboard text={`www.botmaker.com/bots/${this.state.user.bot_url_id}`}>
+                                <Icon name="copy"/>
+                            </CopyToClipboard>
+                            
+                        </Form.Input>
                     </div>
                 ) : localStorage.getItem("token") ? null : <Redirect to="/login" />}
             </div>
