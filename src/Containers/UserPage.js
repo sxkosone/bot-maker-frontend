@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { Button, Form, Message, Icon, Popup } from 'semantic-ui-react';
+import { Button, Form, Message, Icon } from 'semantic-ui-react';
 import {CopyToClipboard} from 'react-copy-to-clipboard';
 
 const USER_URL = "http://localhost:3000/user"
@@ -48,6 +48,25 @@ class UserPage extends React.Component {
         
     }
 
+    renderABot = (bot)  => {
+        //example obj {id: 2, name: "lisabot", url_id: "12345", user_id: 3, include_default_scripts: true, …}
+        return (<div key={bot.id} className="bot-snippet">
+        <h1>Bot: {bot.name}</h1>
+                        <Button color="green" as={Link} to={`/bots/${bot.url_id}`}>Chat with {bot.name}</Button>
+                         
+                        <Button color="blue" as={Link} to="/edit-bot">Edit your bot</Button>
+                        <h2>Share {bot.name} to the world</h2>
+                        
+                        <Form.Input className="shareLink" value={`www.botmaker.com/bots/${bot.url_id}`}>
+                            <input />
+                            <CopyToClipboard text={`www.botmaker.com/bots/${bot.url_id}`}>
+                                <Icon name="copy" onClick={this.copyToClipboard}/>
+                            </CopyToClipboard>
+                        </Form.Input>
+                        {this.state.copied ? <p>Link copied to clipboard!</p> : null}
+        </div>)
+    }
+
     render() {
         return(
             <div className="UserPage content">
@@ -56,19 +75,7 @@ class UserPage extends React.Component {
                     <div>
                         {this.props.info !== "" ? <Message color="violet">{this.props.info}</Message> : null}
                         <h1>Human: {this.state.user.username}</h1>
-                        <h1>Bot: {this.state.user.bot_name}</h1>
-                        <Button color="green" as={Link} to={`/bots/${this.state.user.bot_url_id}`}>Chat with {this.state.user.bot_name}</Button>
-                         
-                        <Button color="blue" as={Link} to="/edit-bot">Edit your bot</Button>
-                        <h2>Share {this.state.user.bot_name} to the world</h2>
-                        
-                        <Form.Input className="shareLink" value={`www.botmaker.com/bots/${this.state.user.bot_url_id}`}>
-                            <input />
-                            <CopyToClipboard text={`www.botmaker.com/bots/${this.state.user.bot_url_id}`}>
-                                <Icon name="copy" onClick={this.copyToClipboard}/>
-                            </CopyToClipboard>
-                        </Form.Input>
-                        {this.state.copied ? <p>Link copied to clipboard!</p> : null}
+                        {this.state.user.bots.map(bot => this.renderABot(bot))}
                     </div>
                 ) : localStorage.getItem("token") ? null : <Redirect to="/login" />}
             </div>

@@ -17,7 +17,7 @@ class LoginSignup extends React.Component {
 
     login = () => {
         console.log("logging in")
-        let params = {
+        let login_params = {
             username: this.state.username,
             password: this.state.password
           };
@@ -27,10 +27,11 @@ class LoginSignup extends React.Component {
                 "Content-Type": "application/json",
                 Accept: "application/json"
             },
-            body: JSON.stringify(params)
+            body: JSON.stringify(login_params)
         })
         .then(r => r.json())
         .then(response => {
+            debugger
             if (response.success) {
                 localStorage.setItem("token", response.token);
                 console.log("received this response",response)
@@ -53,9 +54,6 @@ class LoginSignup extends React.Component {
         //login function changes redirect to true and redirect to /my-page
         this.createUserAndLogThemIn()
         
-    }
-    signUpAndSaveBot = () => {
-        //if user has already some scripts, then also save scripts. Otherwise, just sign up and log in
     }
     
 

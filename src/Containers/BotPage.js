@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 
 import MessageHistory from './MessageHistory';
 
-const BOT_URL = "http://localhost:3000/get-bot/"
+const BOT_URL = "http://localhost:3000/bots/"
 const SCRIPT_URL = "http://localhost:3000/find-answer"
 
 class BotPage extends React.Component {
