@@ -74,6 +74,7 @@ class UserPage extends React.Component {
         //example obj {id: 2, name: "lisabot", url_id: "12345", user_id: 3, include_default_scripts: true, …}
         return (<div key={bot.id} className="bot-snippet">
         <h1>Bot: {bot.name}</h1>
+        {bot.description ? <h2>{bot.description}</h2> : null}
                         <Button color="green" as={Link} to={`/bots/${bot.url_id}`}>Chat with {bot.name}</Button>
                          
                         <Button color="blue" as={Link} to={`/edit-bot/${bot.url_id}`}>Edit your bot</Button>
