@@ -29,10 +29,12 @@ class SaveBotAndUser extends React.Component {
                 //dispatch an action to state to update current user info!!
                 console.log("got back from backend this user", userObj)
                 this.props.setCurrentUser(userObj)
+                //debugger
                 const user = {
                     username: userObj.username, 
                     bot_name: this.props.botName,
-                    bot_url_id: userObj.bot_url_id ? userObj.bot_url_id : cuid()
+                    bot_url_id: userObj.bot_url_id ? userObj.bot_url_id : cuid(),
+                    include_default_scripts: this.props.includeDefaultScripts
                     //expecting triggers: [{text:"hi", responses: ["hi!", "hey"]}]
                 }
                 user.triggers = this.props.scripts.map(pair => {
@@ -89,9 +91,10 @@ class SaveBotAndUser extends React.Component {
 
 const mapStateToProps = state => {
     return  {
-        scripts: state.scripts,
+        scripts: state.scripts.scripts,
         botName: state.userAndBot.botName,
-        currentUser: state.userAndBot.currentUser
+        currentUser: state.userAndBot.currentUser,
+        includeDefaultScripts: state.scripts.includeDefaultScripts
     }
 }
 

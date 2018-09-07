@@ -3,6 +3,7 @@ import scrollIntoView from "scroll-into-view";
 
 
 const MessageHistory = (props) => {
+    //receives messagehistory as props!
 
     //scrolling not working
     const scrollDiv = () => {

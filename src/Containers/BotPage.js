@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Form } from 'semantic-ui-react';
+import { Form, Button } from 'semantic-ui-react';
+import { Link } from 'react-router-dom';
 
 import MessageHistory from './MessageHistory';
 
@@ -10,7 +11,7 @@ const SCRIPT_URL = "http://localhost:3000/find-answer"
 class BotPage extends React.Component {
     state = {
         userInput: "",
-        messageHistory: []
+        messageHistory: [] //holds messages between human and bot
     }
     componentDidMount() {
         fetch(BOT_URL+this.props.botId).then(r => r.json())
@@ -36,7 +37,11 @@ class BotPage extends React.Component {
         fetch(SCRIPT_URL, {
             method: "POST",
             headers: {"Content-Type": "application/json; charset=utf-8"},
-            body: JSON.stringify({user_message: userMessage, bot_url_id: this.props.botId})
+            body: JSON.stringify({
+                user_message: userMessage, 
+                bot_url_id: this.props.botId, 
+                message_history: this.state.messageHistory
+            })
         }).then(r => r.json()).then(answer => {
             console.log(answer)
             this.setState({
@@ -56,6 +61,7 @@ class BotPage extends React.Component {
                         <Form.Input type="submit" value="Send" />
                     </Form.Group>
                 </Form>
+                <Button color="blue" as={Link} to="/edit-bot">Edit your bot</Button>
             </div>
         )
     }

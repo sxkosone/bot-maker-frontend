@@ -70,7 +70,7 @@ class BotChatContainer extends React.Component {
 //you may have to change this to retrieving from LocalStorage!!
 const mapStateToProps = state => {
     return {
-        scripts: state.scripts,
+        scripts: state.scripts.scripts,
         botName: state.userAndBot.botName
     }
 }

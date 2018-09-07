@@ -18,6 +18,7 @@ class Navbar extends React.Component {
     this.props.addLoggedOutMessage("You're now logged out")
     setTimeout(this.props.clearMessage, 5000)
     this.props.clearCurrentUserFromState()
+    this.props.clearScripts()
 
   }
   //refactor to just one function!
@@ -44,7 +45,8 @@ const mapDispatchToProps = dispatch => {
   return {
     addLoggedOutMessage: (message) => dispatch({ type: "ADD_INFO_MESSAGE", info: message }),
     clearMessage: () => dispatch({ type: "ERASE_INFO_MESSAGE" }),
-    clearCurrentUserFromState: () => dispatch({ type: "LOG_OUT" })
+    clearCurrentUserFromState: () => dispatch({ type: "LOG_OUT" }),
+    clearScripts: () => dispatch({ type: "CLEAR_SCRIPTS" })
   }
   
 }

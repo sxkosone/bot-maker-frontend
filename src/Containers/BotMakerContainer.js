@@ -22,7 +22,7 @@ class BotMakerContainer extends React.Component {
 
         <h2>Botname</h2>
         <Form.Input type="text" value={this.state.nameInput} onChange={this.handleChange}/>
-        <h2>Scripts</h2>
+        
         <BotScriptContainer nameBot={this.handleSubmit}/>
       </div>
     );

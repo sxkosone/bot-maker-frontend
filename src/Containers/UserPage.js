@@ -44,7 +44,7 @@ class UserPage extends React.Component {
         this.setState({
             copied: true
         })
-        //setTimeout(this.setState({copied: false}), 5000) //do you need this
+        //setTimeout(this.setState({copied: false}), 5000) //do you need this rly
         
     }
 

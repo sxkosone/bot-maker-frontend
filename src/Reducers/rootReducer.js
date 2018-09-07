@@ -9,7 +9,10 @@ const rootReducer = combineReducers({
 
 export default rootReducer;
 
-function manageScript(state = [], action) {
+function manageScript(state = {
+    includeDefaultScripts: true,
+    scripts: []
+}, action) {
     //stores an array of trigger-response objects
     //console.log("received in the script reducer:", action)
     switch(action.type) {
@@ -17,15 +20,11 @@ function manageScript(state = [], action) {
             //take in an array of trigger-response objects, like this
             //[{trigger:"hi", response: ["hii", "hi to you"]}, {trigger: "bye", response: ["byebye", "bai"]}]
             let newCleanPairs = action.newPairs.filter(pair => pair.trigger)
-            //this operation should be now unnecessary since the pairs are already formatted correctly to hold strings
-            // newCleanPairs = newCleanPairs.map(pair => {
-            //     if(typeof pair.response === "string") {
-            //         debugger
-            //         pair.response = pair.response.split("//")
-            //     }
-            //     return pair
-            // })
-            return newCleanPairs
+            return {...state, scripts: newCleanPairs}
+        case "ADD_INCLUDE_DEFAULT_SCRIPTS":
+            return {...state, includeDefaultScripts: action.selection}
+        case "CLEAR_SCRIPTS":
+            return {includeDefaultScripts: true, scripts: []}
         default:
             return state
     }
@@ -42,6 +41,8 @@ function manageUserAndBot(state = {
             return {...state, currentUser: action.currentUser}
         case "LOG_OUT":
             return {...state, currentUser: null}
+        case "CLEAR_SCRIPTS":
+            return { ...state, botName: ""}
         default:
             return state
     }
