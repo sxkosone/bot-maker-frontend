@@ -15,6 +15,7 @@ class SaveBotAndUser extends React.Component {
     }
 
     saveBotForLoggedInUser = () => {
+        //YOU SHOULD CHANGE THIS TO JUST ONE FETCH REQUEST!!! Send auth token and other info all at once
         let token = localStorage.getItem("token")
         //check if user is logged in
         if (token) {
@@ -34,6 +35,7 @@ class SaveBotAndUser extends React.Component {
                 const user = {
                     username: userObj.username, 
                     bot_name: this.props.botName,
+                    bot_description: this.props.botDescription,
                     bot_url_id: this.props.botUrl ? this.props.botUrl : cuid(),
                     include_default_scripts: this.props.includeDefaultScripts
                     //expecting triggers: [{text:"hi", responses: ["hi!", "hey"]}]
@@ -46,7 +48,10 @@ class SaveBotAndUser extends React.Component {
                 })
                 fetch(`http://localhost:3000/users/${userObj.id}`, {
                     method: "PATCH",
-                    headers: { "Content-Type": "application/json; charset=utf-8"},
+                    headers: { 
+                        "Content-Type": "application/json; charset=utf-8",
+                        Authorization: `Bearer ${token}`
+                    },
                     body: JSON.stringify({"user": user})})
                     .then(r => r.json())
                     .then(r => {
@@ -96,7 +101,8 @@ const mapStateToProps = state => {
         botName: state.userAndBot.botName,
         botUrl: state.userAndBot.botUrl,
         currentUser: state.userAndBot.currentUser,
-        includeDefaultScripts: state.scripts.includeDefaultScripts
+        includeDefaultScripts: state.scripts.includeDefaultScripts,
+        botDescription: state.userAndBot.botDescription
     }
 }
 

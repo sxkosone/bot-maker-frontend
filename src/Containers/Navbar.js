@@ -6,7 +6,6 @@ import { connect } from 'react-redux'
 class Navbar extends React.Component {
   
   logout = () => {
-    //Should I TODO?: dispatch an action to clear the current user and bot from app's state
     localStorage.clear()
     
     //redirecting
@@ -25,16 +24,16 @@ class Navbar extends React.Component {
   renderLoginLogout = () => {
     return localStorage.getItem("token") ? <Menu.Item onClick={this.logout} position="right">Log out</Menu.Item> : <Menu.Item as={NavLink} to="/login" position="right">Login</Menu.Item>
   }
-  renderMyPageOrCreate = () => {
-    return localStorage.getItem("token") ? <Menu.Item as={NavLink} exact to="/my-page">My Bot</Menu.Item> : <Menu.Item as={NavLink} exact to="/create">Create</Menu.Item>
+  renderMyPage = () => {
+    return localStorage.getItem("token") ? <Menu.Item as={NavLink} exact to="/my-page">My Bot</Menu.Item> : null
   }
   render() {
     return (
       <Menu className="Navbar">
         
         <Menu.Item as={NavLink} exact to="/">BotMaker</Menu.Item>
-        {this.renderMyPageOrCreate()}
-        
+        {this.renderMyPage()}
+        <Menu.Item as={NavLink} exact to="/create">Create</Menu.Item>
         {this.renderLoginLogout()}
       </Menu>
     );

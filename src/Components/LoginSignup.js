@@ -71,12 +71,20 @@ class LoginSignup extends React.Component {
             body: JSON.stringify({"user": user})})
             .then(r => r.json())
             .then(response => {
+                debugger
                 if(response.success) {
-                    this.login
+                    this.login()
                 } else {
-                    this.setState({
-                        error: Object.keys(response.errors)[0]+" "+response.errors.username[0]
-                    })
+                    if(response.errors) {
+                        this.setState({
+                            error: Object.keys(response.errors)[0]+" "+response.errors.username[0]
+                        })
+                    } else {
+                        this.setState({
+                            error: "Something went wrong, unable to create new user"
+                        })
+                    }
+                    
                 }
             })
             // .then(this.login)

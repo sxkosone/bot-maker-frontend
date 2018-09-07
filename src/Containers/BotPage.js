@@ -15,8 +15,13 @@ class BotPage extends React.Component {
     }
     componentDidMount() {
         fetch(BOT_URL+this.props.botId).then(r => r.json())
-        .then(nameObj => {
-            this.props.setBotName(nameObj.bot_name)
+        .then(response => {
+            if(response.success) {
+                this.props.setBotName(response.bot_name)
+            } else {
+                this.props.setErrorMessage("No bot lives in this address")
+            }
+            
         })
     }
     handleUserTyping = (e) => {
@@ -50,8 +55,8 @@ class BotPage extends React.Component {
         })
     }
 
-    render() {
-        return(
+    renderBotPage = () => {
+        return (
             <div>
                 <h1>BotPage for {this.props.botName}</h1>
                 <MessageHistory history={this.state.messageHistory}/>
@@ -65,17 +70,25 @@ class BotPage extends React.Component {
             </div>
         )
     }
+
+    render() {
+        return(
+            <div>{this.props.errorMessage === "No bot lives in this address" ? <h1>{this.props.errorMessage}.<br/> <Button inverted size="huge" as={Link} to="/create">Create your bot here</Button></h1> : this.renderBotPage()}</div>
+        )
+    }
 }
 
 const mapStateToProps = state => {
     return {
-        botName: state.userAndBot.botName
+        botName: state.userAndBot.botName,
+        errorMessage: state.messages.error
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
-        setBotName: (botName) => dispatch({ type: "ADD_BOTNAME", botName: botName })
+        setBotName: (botName) => dispatch({ type: "ADD_BOTNAME", botName: botName }),
+        setErrorMessage: (message) => dispatch({ type: "ADD_ERROR_MESSAGE", error: message })
     }
 }
 

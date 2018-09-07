@@ -5,6 +5,7 @@ import { Button, Form, Message, Icon } from 'semantic-ui-react';
 import {CopyToClipboard} from 'react-copy-to-clipboard';
 
 const USER_URL = "http://localhost:3000/user"
+const BOT_URL = "http://localhost:3000/bots/"
 
 class UserPage extends React.Component {
     state = {
@@ -23,6 +24,7 @@ class UserPage extends React.Component {
             })
             .then(r => r.json())
             .then(userObj => {
+                
                 this.setState({ user: userObj })
             })
             //think about setting an error message to redux state
@@ -39,13 +41,33 @@ class UserPage extends React.Component {
     }
 
     copyToClipboard = (urlId) => {
-        let link = `www.botmaker.com/bots/${this.state.user.bot_url_id}`
+        let link = `www.botmaker.com/bots/${urlId}`
         console.log(link)
         this.setState({
             copied: true
         })
         //setTimeout(this.setState({copied: false}), 5000) //do you need this rly
-        
+    }
+
+    delete = (botId) => {
+        console.log("deleting bot number", botId)
+        let token = localStorage.getItem("token")
+        fetch(BOT_URL+botId, {
+            method: "DELETE",
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        })
+        .then(r => r.json())
+        .then(response => {
+            if(response.success) {
+                
+                this.props.addInfoMessage(response.message)
+                this.setState({user: response.user})
+            } else {
+                this.props.addErrorMessage(response.message)
+            }
+        })
     }
 
     renderABot = (bot)  => {
@@ -64,6 +86,7 @@ class UserPage extends React.Component {
                             </CopyToClipboard>
                         </Form.Input>
                         {this.state.copied ? <p>Link copied to clipboard!</p> : null}
+                        <Button inverted color="red" onClick={() => this.delete(bot.id)}>Delete</Button>
         </div>)
     }
 
@@ -75,7 +98,8 @@ class UserPage extends React.Component {
                     <div>
                         {this.props.info !== "" ? <Message color="violet">{this.props.info}</Message> : null}
                         <h1>Human: {this.state.user.username}</h1>
-                        {this.state.user.bots.map(bot => this.renderABot(bot))}
+                        <Button inverted as={Link} to="/create" >Make a new bot</Button>
+                        {this.state.user.bots === undefined ? null : this.state.user.bots.map(bot => this.renderABot(bot))}
                     </div>
                 ) : localStorage.getItem("token") ? null : <Redirect to="/login" />}
             </div>
@@ -93,7 +117,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        addInfoMessage: (message) => dispatch({ type: "ADD_INFO_MESSAGE", info: message })
+        addInfoMessage: (message) => dispatch({ type: "ADD_INFO_MESSAGE", info: message }),
+        addErrorMessage: (message) => dispatch({ type: "ADD_ERROR_MESSAGE", error: message })
     }
 }
 
