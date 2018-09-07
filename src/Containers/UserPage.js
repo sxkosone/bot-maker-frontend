@@ -38,7 +38,7 @@ class UserPage extends React.Component {
         }
     }
 
-    copyToClipboard = () => {
+    copyToClipboard = (urlId) => {
         let link = `www.botmaker.com/bots/${this.state.user.bot_url_id}`
         console.log(link)
         this.setState({
@@ -54,13 +54,13 @@ class UserPage extends React.Component {
         <h1>Bot: {bot.name}</h1>
                         <Button color="green" as={Link} to={`/bots/${bot.url_id}`}>Chat with {bot.name}</Button>
                          
-                        <Button color="blue" as={Link} to="/edit-bot">Edit your bot</Button>
+                        <Button color="blue" as={Link} to={`/edit-bot/${bot.url_id}`}>Edit your bot</Button>
                         <h2>Share {bot.name} to the world</h2>
                         
                         <Form.Input className="shareLink" value={`www.botmaker.com/bots/${bot.url_id}`}>
                             <input />
                             <CopyToClipboard text={`www.botmaker.com/bots/${bot.url_id}`}>
-                                <Icon name="copy" onClick={this.copyToClipboard}/>
+                                <Icon name="copy" onClick={() => this.copyToClipboard(bot.url_id)}/>
                             </CopyToClipboard>
                         </Form.Input>
                         {this.state.copied ? <p>Link copied to clipboard!</p> : null}

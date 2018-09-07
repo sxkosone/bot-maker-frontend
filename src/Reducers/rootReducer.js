@@ -32,11 +32,14 @@ function manageScript(state = {
 
 function manageUserAndBot(state = {
     botName: "",
+    botUrl: "",
     currentUser: null
 }, action) {
     switch(action.type) {
         case "ADD_BOTNAME":
             return {...state, botName: action.botName}
+        case "ADD_BOT_URL":
+            return {...state, botUrl: action.url}
         case "LOG_IN":
             return {...state, currentUser: action.currentUser}
         case "LOG_OUT":

@@ -29,7 +29,11 @@ class App extends Component {
             return <BotPage botId={botId}/>
           }} />
           <Route path="/save-bot" component={SaveBotAndUser} />
-          <Route path="/edit-bot" component={EditUsersBot} />
+          <Route path="/edit-bot/:id" render={(props) => {
+            let urlId = props.match.params.id
+            return <EditUsersBot urlId={urlId}/>}
+          }
+             />
         </Switch>
       </div>
     );

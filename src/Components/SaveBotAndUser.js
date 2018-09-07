@@ -26,6 +26,7 @@ class SaveBotAndUser extends React.Component {
             })
             .then(r => r.json())
             .then(userObj => {
+                
                 //dispatch an action to state to update current user info!!
                 console.log("got back from backend this user", userObj)
                 this.props.setCurrentUser(userObj)
@@ -33,7 +34,7 @@ class SaveBotAndUser extends React.Component {
                 const user = {
                     username: userObj.username, 
                     bot_name: this.props.botName,
-                    bot_url_id: userObj.bot_url_id ? userObj.bot_url_id : cuid(),
+                    bot_url_id: this.props.botUrl ? this.props.botUrl : cuid(),
                     include_default_scripts: this.props.includeDefaultScripts
                     //expecting triggers: [{text:"hi", responses: ["hi!", "hey"]}]
                 }
@@ -93,6 +94,7 @@ const mapStateToProps = state => {
     return  {
         scripts: state.scripts.scripts,
         botName: state.userAndBot.botName,
+        botUrl: state.userAndBot.botUrl,
         currentUser: state.userAndBot.currentUser,
         includeDefaultScripts: state.scripts.includeDefaultScripts
     }
