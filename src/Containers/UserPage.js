@@ -10,7 +10,8 @@ const BOT_URL = "http://localhost:3000/bots/"
 class UserPage extends React.Component {
     state = {
         user: this.props.currentUser,//used to be localStorage.getItem("token")
-        copied: false
+        copied: false,
+        redirect: false
     }
 
     componentDidMount() {
@@ -91,15 +92,24 @@ class UserPage extends React.Component {
         </div>)
     }
 
+    redirectToCreate = () => {
+        //start a new empty slate for this user
+        this.props.clearScriptsAndBot()
+        this.setState({
+            redirect: true
+        })
+    }
+
     render() {
         return(
             <div className="UserPage content">
+            {this.state.redirect ? <Redirect to="/create"/> : null}
             {/* two ternary operators to first check if login user fetch is ready and then to check if user is logged in at all */}
                 {this.state.user ? (
                     <div>
                         {this.props.info !== "" ? <Message color="violet">{this.props.info}</Message> : null}
                         <h1>Human: {this.state.user.username}</h1>
-                        <Button inverted as={Link} to="/create" >Make a new bot</Button>
+                        <Button inverted onClick={this.redirectToCreate}>Make a new bot</Button>
                         {this.state.user.bots === undefined ? null : this.state.user.bots.map(bot => this.renderABot(bot))}
                     </div>
                 ) : localStorage.getItem("token") ? null : <Redirect to="/login" />}
@@ -119,7 +129,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         addInfoMessage: (message) => dispatch({ type: "ADD_INFO_MESSAGE", info: message }),
-        addErrorMessage: (message) => dispatch({ type: "ADD_ERROR_MESSAGE", error: message })
+        addErrorMessage: (message) => dispatch({ type: "ADD_ERROR_MESSAGE", error: message }),
+        clearScriptsAndBot: () => dispatch({ type: "CLEAR_SCRIPTS" })
     }
 }
 

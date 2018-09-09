@@ -25,7 +25,7 @@ class Navbar extends React.Component {
     return localStorage.getItem("token") ? <Menu.Item onClick={this.logout} position="right">Log out</Menu.Item> : <Menu.Item as={NavLink} to="/login" position="right">Login</Menu.Item>
   }
   renderMyPage = () => {
-    return localStorage.getItem("token") ? <Menu.Item as={NavLink} exact to="/my-page">My Bot</Menu.Item> : null
+    return localStorage.getItem("token") ? <Menu.Item as={NavLink} exact to="/my-page">My Bots</Menu.Item> : <Menu.Item as={NavLink} exact to="/create">Create</Menu.Item>
   }
   render() {
     return (
@@ -33,7 +33,7 @@ class Navbar extends React.Component {
         
         <Menu.Item as={NavLink} exact to="/">BotMaker</Menu.Item>
         {this.renderMyPage()}
-        <Menu.Item as={NavLink} exact to="/create">Create</Menu.Item>
+        
         {this.renderLoginLogout()}
       </Menu>
     );

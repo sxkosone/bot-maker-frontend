@@ -48,7 +48,7 @@ function manageUserAndBot(state = {
         case "LOG_OUT":
             return {...state, currentUser: null}
         case "CLEAR_SCRIPTS":
-            return { ...state, botName: ""}
+            return { ...state, botName: "", botUrl: ""}
         default:
             return state
     }
