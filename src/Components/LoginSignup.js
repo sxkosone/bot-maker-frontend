@@ -1,7 +1,7 @@
 import React from 'react';
 //import cuid from 'cuid'
 import { connect } from 'react-redux';
-import { Form, Button, Message, Tab } from 'semantic-ui-react';
+import { Form, Button, Tab } from 'semantic-ui-react';
 import { withRouter } from 'react-router-dom'
 
 
@@ -31,7 +31,6 @@ class LoginSignup extends React.Component {
         })
         .then(r => r.json())
         .then(response => {
-            debugger
             if (response.success) {
                 localStorage.setItem("token", response.token);
                 console.log("received this response",response)
@@ -71,7 +70,6 @@ class LoginSignup extends React.Component {
             body: JSON.stringify({"user": user})})
             .then(r => r.json())
             .then(response => {
-                debugger
                 if(response.success) {
                     this.login()
                 } else {
@@ -141,10 +139,12 @@ class LoginSignup extends React.Component {
     render() {
         return(
         <div className="LoginSignup content">
-        {this.props.info !== "" ? <Message color="violet">{this.props.info}</Message> : null}
-        {this.renderRedirect()}
-        {this.state.error !== "" ? <p>{this.state.error}</p> : null}
-        <Tab panes={this.renderPanes()} />
+            <div className="container">
+                {/* {this.props.info !== "" ? <Message color="violet">{this.props.info}</Message> : null} */}
+                {this.renderRedirect()}
+                {this.state.error !== "" ? <p className="error-message">{this.state.error}</p> : null}
+                <Tab panes={this.renderPanes()} />
+            </div>
         </div>
         )
     }

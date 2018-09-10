@@ -47,6 +47,7 @@ class EditUsersBot extends React.Component {
                 this.props.addNameFromBackendToState(response.bot_name)
                 this.props.addDefaultScriptsSelector(defaultScripts)
                 this.props.addBotUrlFromBackendToState(match.url_id)
+                this.props.addBotDescriptionFromBackendToState(response.description)
                 this.setState({
                     scriptsReady: true
                 })
@@ -70,6 +71,7 @@ const mapDispatchToProps = dispatch => {
         addScriptsFromBackendToState: (scripts) => dispatch({ type: "ADD_MANY_NEW_PAIRS", newPairs: scripts }),
         addNameFromBackendToState: (name) => dispatch({ type: "ADD_BOTNAME", botName: name }),
         addBotUrlFromBackendToState: (url) => dispatch({ type: "ADD_BOT_URL", url: url }),
+        addBotDescriptionFromBackendToState: (desc) => dispatch({ type: "ADD_BOT_DESCRIPTION", botDescription: desc }),
         addDefaultScriptsSelector: (boolean) => dispatch({ type: "ADD_INCLUDE_DEFAULT_SCRIPTS", selection: boolean})
     }
 }

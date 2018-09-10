@@ -66,6 +66,7 @@ class SaveBotAndUser extends React.Component {
     }
     redirectToLogin = () => {
         this.props.addInfoMessage("Login or sign up to save your bot")
+        setTimeout(() => this.props.addInfoMessage(""), 5000)
         var saveState = {
             goal: "successfully redirect user to login and back to save page"
           };

@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import MessageHistory from './MessageHistory';
 import { Link } from 'react-router-dom';
-import { Form, Button } from 'semantic-ui-react';
+import { Form, Button, Icon } from 'semantic-ui-react';
 
 
 class BotChatContainer extends React.Component {
@@ -50,17 +50,18 @@ class BotChatContainer extends React.Component {
         return(
         <div className="botChatContainer">
             <h2>{this.props.botName === "" ? "Chat with your bot" : `Chat with ${this.props.botName} the bot`}</h2>
+            <p>Send messages to your bot to see how your scripts are working! Please note that this is a developmental chat view - the default scripts are not available until you save the bot.</p>
             <MessageHistory history={this.state.messageHistory}/>
             <Form onSubmit={this.handleUserSend}>
             <Form.Group>
-                <Form.Input type="text" value={this.state.userInput} onChange={this.handleUserTyping}/>
-                <Form.Input type="submit" value="Send" />
+                <Form.Input type="text" value={this.state.userInput} onChange={this.handleUserTyping} action={<Form.Input type="submit" value="Send" />}/>
+                
                 </Form.Group>
             </Form>
-            <div className="Buttons">
-                <Button primary as={ Link } to="/create">Back to the drawing board</Button>
-                <Button color="green" as={ Link } to="/save-bot">My bot is ready</Button>
-            </div>
+            <Button.Group className="Buttons">
+                <Button primary as={ Link } to="/create"><Icon name="arrow left"/>Back to editing</Button>
+                <Button color="green" as={ Link } to="/save-bot">My bot is ready<Icon name="arrow right"/></Button>
+            </Button.Group>
         </div>
 
         )

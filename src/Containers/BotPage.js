@@ -57,23 +57,23 @@ class BotPage extends React.Component {
 
     renderBotPage = () => {
         return (
-            <div>
-                <h1>BotPage for {this.props.botName}</h1>
+            <React.Fragment>
+                <h1>Chat with {this.props.botName}</h1>
                 <MessageHistory history={this.state.messageHistory}/>
                 <Form onSubmit={this.handleUserSend}>
                     <Form.Group>
-                        <Form.Input type="text" value={this.state.userInput} onChange={this.handleUserTyping}/>
-                        <Form.Input type="submit" value="Send" />
+                    <Form.Input type="text" value={this.state.userInput} onChange={this.handleUserTyping} action={<Form.Input type="submit" value="Send" />}/>
+
                     </Form.Group>
                 </Form>
                 <Button color="blue" as={Link} to="/edit-bot">Edit your bot</Button>
-            </div>
+            </React.Fragment>
         )
     }
 
     render() {
         return(
-            <div>{this.props.errorMessage === "No bot lives in this address" ? <h1>{this.props.errorMessage}.<br/> <Button inverted size="huge" as={Link} to="/create">Create your bot here</Button></h1> : this.renderBotPage()}</div>
+            <div className="BotPage content">{this.props.errorMessage === "No bot lives in this address" ? <h1>{this.props.errorMessage}.<br/> <Button inverted size="huge" as={Link} to="/create">Create your bot here</Button></h1> : this.renderBotPage()}</div>
         )
     }
 }

@@ -1,7 +1,7 @@
 import React from 'react';
 import BotScriptContainer from './BotScriptContainer';
 import { connect } from 'react-redux';
-import { Form } from 'semantic-ui-react';
+import { Form, TextArea } from 'semantic-ui-react';
 
 class BotMakerContainer extends React.Component {
   state = {
@@ -21,12 +21,14 @@ class BotMakerContainer extends React.Component {
   }
   render() {
     return (
-      <div className="BotMakerContainer content">
-
+      <div className="BotMakerContainer">
+        <h1>Create a chatbot</h1>
         <h2>Botname</h2>
-        <Form.Input name="nameInput" type="text" value={this.state.nameInput} onChange={this.handleChange}/>
+        <Form.Input fluid name="nameInput" type="text" value={this.state.nameInput} onChange={this.handleChange}/>
         <h2>Description</h2>
-        <Form.Input name="descriptionInput" type="textarea" value={this.state.descriptionInput} onChange={this.handleChange}/>
+        <Form>
+        <TextArea name="descriptionInput" placeholder="Tell us about your bot..." autoHeight value={this.state.descriptionInput} onChange={this.handleChange}/>
+        </Form>
         <BotScriptContainer nameBot={this.handleSubmit}/>
       </div>
     );

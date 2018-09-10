@@ -2,7 +2,7 @@ import React from 'react';
 import TriggerResponsePair from '../Components/TriggerResponsePair';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
-import { Form, Button, Checkbox } from 'semantic-ui-react';
+import { Form, Button, Checkbox, Icon, Popup, Divider } from 'semantic-ui-react';
 
 class BotScriptContainer extends React.Component {
   state = {
@@ -57,18 +57,23 @@ class BotScriptContainer extends React.Component {
       return <Redirect to="/chat" />
     }
   }
+  defaultScriptText = () => {
+    return <p><strong>Default scripts include recognition of most common greetings and goodbyes.</strong> It also has answers to common questions, such as 'how are you' and 'how do you work'. Your scripts will always take precedence, so even if the same trigger phrase is both in your scripts and the default scripts, your response will be always chosen.</p>
+  }
   render() {
     return (
       <div className="BotScriptContainer">
       {this.renderRedirectToChat()}
         <h2>Default Scripts</h2>
-        <Checkbox toggle checked={this.state.includeDefaultScripts} onClick={() => this.setState({ includeDefaultScripts: !this.state.includeDefaultScripts })} label="Default scripts ON/OFF"/> <p>Include default answers to general greetings and questions - don't worry, your scripts will always be prioritized!</p>
+        <Checkbox toggle checked={this.state.includeDefaultScripts} onClick={() => this.setState({ includeDefaultScripts: !this.state.includeDefaultScripts })} label="Default scripts ON/OFF"/> 
+        <p>Include default answers to general greetings and questions - don't worry, your scripts will always be prioritized! <Popup hideOnScroll on="hover" content={this.defaultScriptText()} trigger={<em>What default scripts?</em>}/></p>
         <h2>Your Scripts</h2>
         <p>Add some script to your bot. What "triggers" should the bot respond to? Separate responses with "//" to add multiple responses to the same trigger.</p>
         <Form onSubmit={this.handleSubmit}>
         {this.state.pairs.map((pair, index) => <TriggerResponsePair key={index} index={index} pair={pair} handleEdits={this.handleEdits} addPair={this.props.addPair} delete={this.deleteTriggerResponsePair}/>)}
-        <Button circular color="green" onClick={this.addNewTriggerResponsePair}><h1>+</h1></Button>add a new trigger
-        <Button color="blue" type="submit">Save Script and go to chat with bot</Button>
+        <Divider />
+        <Button color="green" onClick={this.addNewTriggerResponsePair}><Icon name="plus"/>Add a new trigger</Button>
+        <Button floated="right" color="blue" type="submit">Save and chat<Icon name="arrow right"/></Button>
         </Form>
       </div>
     );

@@ -1,8 +1,9 @@
 import React from 'react';
-import { Link, Redirect } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { Button, Form, Message, Icon } from 'semantic-ui-react';
-import {CopyToClipboard} from 'react-copy-to-clipboard';
+import { Card, Icon, Divider } from 'semantic-ui-react';
+
+import BotSnippet from "../Components/BotSnippet"
 
 const USER_URL = "http://localhost:3000/user"
 const BOT_URL = "http://localhost:3000/bots/"
@@ -10,7 +11,7 @@ const BOT_URL = "http://localhost:3000/bots/"
 class UserPage extends React.Component {
     state = {
         user: this.props.currentUser,//used to be localStorage.getItem("token")
-        copied: false,
+        
         redirect: false
     }
 
@@ -33,21 +34,13 @@ class UserPage extends React.Component {
         } 
         else {
             this.props.addInfoMessage("Login or sign up to view your bot")
+            setTimeout(() => this.props.addInfoMessage(""), 5000)
             this.setState({
                 user: null
             })
             
         
         }
-    }
-
-    copyToClipboard = (urlId) => {
-        let link = `www.botmaker.com/bots/${urlId}`
-        console.log(link)
-        this.setState({
-            copied: true
-        })
-        //setTimeout(this.setState({copied: false}), 5000) //do you need this rly
     }
 
     delete = (botId) => {
@@ -71,46 +64,37 @@ class UserPage extends React.Component {
         })
     }
 
-    renderABot = (bot)  => {
-        //example obj {id: 2, name: "lisabot", url_id: "12345", user_id: 3, include_default_scripts: true, …}
-        return (<div key={bot.id} className="bot-snippet">
-        <h1>Bot: {bot.name}</h1>
-        {bot.description ? <h2>{bot.description}</h2> : null}
-                        <Button color="green" as={Link} to={`/bots/${bot.url_id}`}>Chat with {bot.name}</Button>
-                         
-                        <Button color="blue" as={Link} to={`/edit-bot/${bot.url_id}`}>Edit your bot</Button>
-                        <h2>Share {bot.name} to the world</h2>
-                        
-                        <Form.Input className="shareLink" value={`www.botmaker.com/bots/${bot.url_id}`}>
-                            <input />
-                            <CopyToClipboard text={`www.botmaker.com/bots/${bot.url_id}`}>
-                                <Icon name="copy" onClick={() => this.copyToClipboard(bot.url_id)}/>
-                            </CopyToClipboard>
-                        </Form.Input>
-                        {this.state.copied ? <p>Link copied to clipboard!</p> : null}
-                        <Button inverted color="red" onClick={() => this.delete(bot.id)}>Delete</Button>
-        </div>)
-    }
+    // redirectToCreate = () => {
+    //     //start a new empty slate for this user
+    //     this.props.clearScriptsAndBot()
+    //     this.setState({
+    //         redirect: true
+    //     })
+    // }
 
-    redirectToCreate = () => {
-        //start a new empty slate for this user
-        this.props.clearScriptsAndBot()
-        this.setState({
-            redirect: true
-        })
+    renderMakeANewBotCard = () => {
+        return <Card color="green" href="/create" onClick={this.props.clearScriptsAndBot}>
+        
+            
+        <Icon name="plus" size="big"/>
+        <Card.Content>
+        <Card.Header>Make a new chatbot</Card.Header>
+        </Card.Content>
+        </Card>
     }
 
     render() {
         return(
-            <div className="UserPage content">
+            <div className="UserPage">
             {this.state.redirect ? <Redirect to="/create"/> : null}
             {/* two ternary operators to first check if login user fetch is ready and then to check if user is logged in at all */}
                 {this.state.user ? (
                     <div>
-                        {this.props.info !== "" ? <Message color="violet">{this.props.info}</Message> : null}
-                        <h1>Human: {this.state.user.username}</h1>
-                        <Button inverted onClick={this.redirectToCreate}>Make a new bot</Button>
-                        {this.state.user.bots === undefined ? null : this.state.user.bots.map(bot => this.renderABot(bot))}
+                        <p><Icon name="user"/>{this.state.user.username}</p>
+                        <h1>Your Chatbots</h1>
+                        
+                        {this.state.user.bots === undefined || this.state.user.bots.length === 0 ? <h3>You don't seem to have any bots yet. Create your first!<Divider />{this.renderMakeANewBotCard()}</h3> : <Card.Group centered>{this.state.user.bots.map(bot => 
+                        <BotSnippet key={bot.id} bot={bot} delete={this.delete}/>)}{this.renderMakeANewBotCard()}</Card.Group>}
                     </div>
                 ) : localStorage.getItem("token") ? null : <Redirect to="/login" />}
             </div>

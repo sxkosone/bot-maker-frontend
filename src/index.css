@@ -1,31 +1,38 @@
 body {
   margin: 0;
   padding: 0;
-  background-color: #21D4FD;
-  background-image: linear-gradient(19deg, #21D4FD 0%, #B721FF 100%); 
+  background-color: #B721FF;
 }
 
-.EditUsersBot.content {
-  padding: 0.8rem;
-  background: rgb(33,212,253);
-  background: radial-gradient(circle, rgba(33,212,253,1) 0%, rgba(183,33,255,1) 100%);
-} 
 
 body h1, h2, h3, p, a {
   font-family: "Work Sans", sans-serif;
 }
 
+p.info-message {
+  color: white;
+  text-align: center;
+  font-size: 1.5rem;
+  padding-top: 0.5rem;
+}
+
+p.error-message {
+  color: red;
+  text-align: center;
+  font-size: 1.5rem;
+}
+
 .content {
-  padding: 0 0.8rem;
+  padding: 1.6rem 0.8rem;
+  background-color: #21D4FD;
+  background-image: linear-gradient(19deg, #21D4FD 0%, #B721FF 100%); 
+  height: 100%;
+  max-width: 600px;
 }
 
 
 .human-message {
   text-align: right;
-}
-
-.BotMakerContainer {
-  /* padding: 1rem; */
 }
 
 .equal.with.fields {
@@ -53,16 +60,26 @@ body h1, h2, h3, p, a {
   overflow: scroll;
 }
 
-
+.BotPage {
+  height: 100%;
+}
 
 /*navigation*/
 .ui.Navbar {
   border-radius: 0px;
+  margin: 0px;
 }
+
 
 .WelcomeContainer {
   display: flex;
-  height: 80%;
+  /* height: 100%; */
+  background: linear-gradient(200deg, #21D4FD, #B721FF);
+  background-size: 600% 600%;
+  background-attachment: fixed;
+  height: 100%;
+  min-height: 100%;
+  animation: Gradient 10s ease infinite;
 }
 #WelcomeContent {
   margin: auto;
@@ -83,14 +100,46 @@ body h1, h2, h3, p, a {
 /*login and signup forms*/
 .LoginSignup {
   min-height: 50%;
+  display: flex;
+  flex-direction: column;
+  padding: 3rem;
 }
 
-.LoginSignup form {
+.LoginSignup .container {
+  width: 80%;
+  max-width: 450px;
+  margin: 0 auto;
+}
+
+.BotMakerContainer {
+  padding: 1rem;
+  max-width: 800px;
   margin: auto;
-  /* width: 70%; */
+}
+
+.UserPage h1{
+  font-size: 3rem;
+  /* text-align: center; */
+}
+
+.UserPage {
+  padding: 1rem;
 }
 
 /*USER INFO PAGE*/
 .shareLink .input {
   width: 100%;
+}
+
+/*animation*/
+@keyframes Gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }

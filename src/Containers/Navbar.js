@@ -1,28 +1,12 @@
 import React from 'react';
 import { NavLink} from 'react-router-dom'
 import { Menu } from 'semantic-ui-react'
-import { connect } from 'react-redux'
 
 class Navbar extends React.Component {
   
-  logout = () => {
-    localStorage.clear()
-    
-    //redirecting
-    var saveState = {
-          goal: "redirect user to front page after logged out"
-        };
-         
-    window.history.pushState(saveState, "", "/");
-    this.props.addLoggedOutMessage("You're now logged out")
-    setTimeout(this.props.clearMessage, 5000)
-    this.props.clearCurrentUserFromState()
-    this.props.clearScripts()
-
-  }
   //refactor to just one function!
   renderLoginLogout = () => {
-    return localStorage.getItem("token") ? <Menu.Item onClick={this.logout} position="right">Log out</Menu.Item> : <Menu.Item as={NavLink} to="/login" position="right">Login</Menu.Item>
+    return localStorage.getItem("token") ? <Menu.Item onClick={this.props.logout} position="right">Log out</Menu.Item> : <Menu.Item as={NavLink} to="/login" position="right">Login</Menu.Item>
   }
   renderMyPage = () => {
     return localStorage.getItem("token") ? <Menu.Item as={NavLink} exact to="/my-page">My Bots</Menu.Item> : <Menu.Item as={NavLink} exact to="/create">Create</Menu.Item>
@@ -40,20 +24,4 @@ class Navbar extends React.Component {
   }
 }
 
-const mapDispatchToProps = dispatch => {
-  return {
-    addLoggedOutMessage: (message) => dispatch({ type: "ADD_INFO_MESSAGE", info: message }),
-    clearMessage: () => dispatch({ type: "ERASE_INFO_MESSAGE" }),
-    clearCurrentUserFromState: () => dispatch({ type: "LOG_OUT" }),
-    clearScripts: () => dispatch({ type: "CLEAR_SCRIPTS" })
-  }
-  
-}
-
-const mapStateToProps = state => {
-  return {
-    currentUser: state.userAndBot.currentUser
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Navbar);
+export default Navbar;
