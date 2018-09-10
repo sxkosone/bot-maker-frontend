@@ -37,8 +37,8 @@ class SaveBotAndUser extends React.Component {
                     bot_name: this.props.botName,
                     bot_description: this.props.botDescription,
                     bot_url_id: this.props.botUrl ? this.props.botUrl : cuid(),
-                    include_default_scripts: this.props.includeDefaultScripts
-                    //expecting triggers: [{text:"hi", responses: ["hi!", "hey"]}]
+                    include_default_scripts: this.props.includeDefaultScripts,
+                    include_classifier: this.props.includeClassifier
                 }
                 user.triggers = this.props.scripts.map(pair => {
                     
@@ -103,6 +103,7 @@ const mapStateToProps = state => {
         botUrl: state.userAndBot.botUrl,
         currentUser: state.userAndBot.currentUser,
         includeDefaultScripts: state.scripts.includeDefaultScripts,
+        includeClassifier: state.scripts.includeClassifier,
         botDescription: state.userAndBot.botDescription
     }
 }

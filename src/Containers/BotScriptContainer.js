@@ -116,7 +116,7 @@ const mapDispatchToProps = dispatch => {
   return {
     addNewPairs: (array) => dispatch({type: "ADD_MANY_NEW_PAIRS", newPairs: array }),
     addDefaultScriptsSelector: (boolean) => dispatch({ type: "ADD_INCLUDE_DEFAULT_SCRIPTS", selection: boolean }),
-    addClassifierSelector: (boolean) => dispatch({ type: "ADD_MOOD_DETECTION", selection: boolean })
+    addClassifierSelector: (boolean) => dispatch({ type: "ADD_CLASSIFIER", selection: boolean })
   }
 }
 

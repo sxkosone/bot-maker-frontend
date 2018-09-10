@@ -14,12 +14,21 @@ class BotTraining extends React.Component {
         responses2: ""
     }
     handleSubmit = () => {
-        console.log("submitting this", this.state)
+        
         let token = localStorage.getItem("token")
-        if (token) {
+        
+        let notFilled = false
+        for(let input in this.state) {
+            if (this.state[input]==="") {
+                notFilled = true
+            }
+        }
+        
+        if (token && !notFilled) {
             const responses1Array = this.state.responses1.split("//")
             const responses2Array = this.state.responses2.split("//")
             const trainingData = {...this.state, responses: {responses1: responses1Array, responses2: responses2Array}}
+            console.log("submitting this", trainingData)
             fetch(BOT_URL+this.props.botId, {
                 method: "POST",
                 headers: {
@@ -31,7 +40,7 @@ class BotTraining extends React.Component {
             })
             .then(r => r.json()).then(console.log)
         } else {
-            console.log("login to train your bots!")
+            console.log("unable to train your bot because reasons")
         }
     }
 
@@ -47,17 +56,17 @@ class BotTraining extends React.Component {
             <p className="highlight">This app uses machine learning to make bots better at recognising users' messages. You can add two categories, between which your bot should be able to distinguish. You should also add training data, like sentences or words, that represent that category. This text will be used to teach the bot what messages should belong to which category.</p>
             <Form>
                 <Form.Group widths="equal">
-                    <Form.Input name="category1" onChange={this.handleChange} fluid label='Category #1' placeholder='Name your category with a word, like "happy"' />
-                    <Form.Input name="category2" onChange={this.handleChange} fluid label='Category #2' placeholder='Name your category with a word, like "happy"' />
+                    <Form.Input required name="category1" onChange={this.handleChange} fluid label='Category #1' placeholder='Name your category with a word, like "happy"' />
+                    <Form.Input required name="category2" onChange={this.handleChange} fluid label='Category #2' placeholder='Name your category with a word, like "happy"' />
                 </Form.Group>
                 <Form.Group widths="equal">
-                    <Form.TextArea name="data1" onChange={this.handleChange} autoHeight label="Example text for Category #1" placeholder="add some training text for Category #1"/>
-                    <Form.TextArea name="data2" onChange={this.handleChange} autoHeight label="Example text for Category #2" placeholder="add some training text for Category #2"/>
+                    <Form.TextArea required name="data1" onChange={this.handleChange} autoHeight label="Example text for Category #1" placeholder="add some training text for Category #1"/>
+                    <Form.TextArea required name="data2" onChange={this.handleChange} autoHeight label="Example text for Category #2" placeholder="add some training text for Category #2"/>
                 </Form.Group>
                 <p>Finally, add the responses to each category. What should the bot respond with if it recognizes a category from the user's message? You can add several response options, separated by "//"</p>
                 <Form.Group widths="equal">
-                <Form.Input name="responses1" onChange={this.handleChange} fluid label='Responses to Category #1' placeholder='Write responses, separated by "//"' />
-                    <Form.Input name="responses2" onChange={this.handleChange} fluid label='Responses to Category #2' placeholder='Write responses, separated by "//"' />
+                    <Form.Input required name="responses1" onChange={this.handleChange} fluid label='Responses to Category #1' placeholder='Write responses, separated by "//"' />
+                    <Form.Input required name="responses2" onChange={this.handleChange} fluid label='Responses to Category #2' placeholder='Write responses, separated by "//"' />
                 </Form.Group>
                 <Button fluid inverted secondary onClick={this.handleSubmit}>Start training</Button >
             </Form>

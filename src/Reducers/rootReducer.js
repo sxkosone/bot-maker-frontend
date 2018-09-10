@@ -24,7 +24,7 @@ function manageScript(state = {
             return {...state, scripts: newCleanPairs}
         case "ADD_INCLUDE_DEFAULT_SCRIPTS":
             return {...state, includeDefaultScripts: action.selection}
-        case "ADD_MOOD_DETECTION":
+        case "ADD_CLASSIFIER":
             return {...state, includeClassifier: action.selection}
         case "CLEAR_SCRIPTS":
             return {includeDefaultScripts: true, includeClassifier: true, scripts: []}
