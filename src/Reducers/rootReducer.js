@@ -11,6 +11,7 @@ export default rootReducer;
 
 function manageScript(state = {
     includeDefaultScripts: true,
+    includeMoodDetection: true,
     scripts: []
 }, action) {
     //stores an array of trigger-response objects
@@ -23,8 +24,10 @@ function manageScript(state = {
             return {...state, scripts: newCleanPairs}
         case "ADD_INCLUDE_DEFAULT_SCRIPTS":
             return {...state, includeDefaultScripts: action.selection}
+        case "ADD_MOOD_DETECTION":
+            return {...state, includeMoodDetection: action.selection}
         case "CLEAR_SCRIPTS":
-            return {includeDefaultScripts: true, scripts: []}
+            return {includeDefaultScripts: true, includeMoodDetection: true, scripts: []}
         default:
             return state
     }

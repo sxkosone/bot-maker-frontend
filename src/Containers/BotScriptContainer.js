@@ -8,6 +8,7 @@ class BotScriptContainer extends React.Component {
   state = {
     redirectToChat: false,
     includeDefaultScripts: this.props.includeDefaultScripts,
+    includeMoodDetection: this.props.includeMoodDetection,
     pairs: [...this.props.stringifiedScripts, {trigger: "", response: ""}] //will hold each new trigger-response pair object
   }
 
@@ -33,8 +34,7 @@ class BotScriptContainer extends React.Component {
     this.props.nameBot()
     this.props.addNewPairs(newArr)
     this.props.addDefaultScriptsSelector(this.state.includeDefaultScripts) //default scripts on/off
-    //debatable: should scripts also be saved to localstorage to ensure they're not lost on refresh?
-    //localStorage.setItem("scripts", JSON.stringify(this.state.pairs))
+    this.props.addMoodDetectionSelector(this.state.includeMoodDetection) //mood detection on/off
     this.setState({
       redirectToChat: true
     })
@@ -67,6 +67,9 @@ class BotScriptContainer extends React.Component {
         <h2>Default Scripts</h2>
         <Checkbox toggle checked={this.state.includeDefaultScripts} onClick={() => this.setState({ includeDefaultScripts: !this.state.includeDefaultScripts })} label="Default scripts ON/OFF"/> 
         <p>Include default answers to general greetings and questions - don't worry, your scripts will always be prioritized! <Popup hideOnScroll on="hover" content={this.defaultScriptText()} trigger={<em>What default scripts?</em>}/></p>
+        <h2>Mood detection</h2>
+        <Checkbox toggle checked={this.state.includeMoodDetection} onClick={() => this.setState({ includeMoodDetection: !this.state.includeMoodDetection })} label="Mood detection ON/OFF"/> 
+
         <h2>Your Scripts</h2>
         <p>Add some script to your bot. What "triggers" should the bot respond to? Separate responses with "//" to add multiple responses to the same trigger.</p>
         <Form onSubmit={this.handleSubmit}>
@@ -90,14 +93,16 @@ const mapStateToProps = state => {
   return {
     stringifiedScripts: stringScripts,
     botName: state.userAndBot.botName,
-    includeDefaultScripts: state.scripts.includeDefaultScripts
+    includeDefaultScripts: state.scripts.includeDefaultScripts,
+    includeMoodDetection: state.scripts.includeMoodDetection
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    addNewPairs: (array) => dispatch({type: "ADD_MANY_NEW_PAIRS", newPairs: array}),
-    addDefaultScriptsSelector: (boolean) => dispatch({ type: "ADD_INCLUDE_DEFAULT_SCRIPTS", selection: boolean})
+    addNewPairs: (array) => dispatch({type: "ADD_MANY_NEW_PAIRS", newPairs: array }),
+    addDefaultScriptsSelector: (boolean) => dispatch({ type: "ADD_INCLUDE_DEFAULT_SCRIPTS", selection: boolean }),
+    addMoodDetectionSelector: (boolean) => dispatch({ type: "ADD_MOOD_DETECTION", selection: boolean })
   }
 }
 
