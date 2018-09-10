@@ -31,6 +31,9 @@ p.error-message {
   max-width: 600px;
 }
 
+.highlight {
+  color: white;
+}
 
 .human-message {
   text-align: right;
