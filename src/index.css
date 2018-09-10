@@ -77,8 +77,7 @@ p.error-message {
   background: linear-gradient(200deg, #21D4FD, #B721FF);
   background-size: 600% 600%;
   background-attachment: fixed;
-  height: 100%;
-  min-height: 100%;
+  min-height: 93.4vh;
   animation: Gradient 10s ease infinite;
 }
 #WelcomeContent {
