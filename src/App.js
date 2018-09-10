@@ -12,6 +12,7 @@ import UserPage from './Containers/UserPage';
 import BotPage from './Containers/BotPage';
 import SaveBotAndUser from './Components/SaveBotAndUser';
 import EditUsersBot from './Containers/EditUsersBot';
+import BotTraining from './Containers/BotTraining';
 
 
 class App extends Component {
@@ -47,6 +48,10 @@ class App extends Component {
           <Route path='/bots/:id' render={(props) => {
             let botId = props.match.params.id
             return <BotPage botId={botId}/>
+          }} />
+          <Route path='/training/:id' render={(props) => {
+            let botId = props.match.params.id
+            return <BotTraining botId={botId}/>
           }} />
           <Route path="/save-bot" component={SaveBotAndUser} />
           <Route path="/edit-bot/:id" render={(props) => {

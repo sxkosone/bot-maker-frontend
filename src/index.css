@@ -24,6 +24,7 @@ p.error-message {
 
 .content {
   padding: 1.6rem 0.8rem;
+  margin: auto;
   background-color: #21D4FD;
   background-image: linear-gradient(19deg, #21D4FD 0%, #B721FF 100%); 
   height: 100%;
@@ -60,9 +61,7 @@ p.error-message {
   overflow: scroll;
 }
 
-.BotPage {
-  height: 100%;
-}
+
 
 /*navigation*/
 .ui.Navbar {
@@ -94,6 +93,8 @@ p.error-message {
 
 .App {
   height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 /*login and signup forms*/

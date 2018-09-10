@@ -66,14 +66,14 @@ class BotPage extends React.Component {
 
                     </Form.Group>
                 </Form>
-                <Button color="blue" as={Link} to="/edit-bot">Edit your bot</Button>
+                {localStorage.getItem("token") ? <Button inverted color="blue" as={Link} to="/my-page">Back to your bots</Button> : null}
             </React.Fragment>
         )
     }
 
     render() {
         return(
-            <div className="BotPage content">{this.props.errorMessage === "No bot lives in this address" ? <h1>{this.props.errorMessage}.<br/> <Button inverted size="huge" as={Link} to="/create">Create your bot here</Button></h1> : this.renderBotPage()}</div>
+            <div className="BotPage">{this.props.errorMessage === "No bot lives in this address" ? <h1>{this.props.errorMessage}.<br/> <Button inverted size="huge" as={Link} to="/create">Create your bot here</Button></h1> : this.renderBotPage()}</div>
         )
     }
 }
