@@ -15,7 +15,6 @@ const MessageHistory = (props) => {
     ////
     
     const renderSentMessages = () => {
-        scrollDown()
         return props.history.map((message, index) => {
             return <p key={index} className={`${message.sender}-message speech-bubble`}>{message.text}</p>
         })
@@ -25,8 +24,6 @@ const MessageHistory = (props) => {
     return(
         <div className="messageHistory">
         {renderSentMessages()}
-        {scrollDiv()}
-        {scrollDown()}
         </div>
     )
 }

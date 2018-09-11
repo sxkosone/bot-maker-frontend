@@ -64,14 +64,6 @@ class UserPage extends React.Component {
         })
     }
 
-    // redirectToCreate = () => {
-    //     //start a new empty slate for this user
-    //     this.props.clearScriptsAndBot()
-    //     this.setState({
-    //         redirect: true
-    //     })
-    // }
-
     renderMakeANewBotCard = () => {
         return <Card color="green" href="/create" onClick={this.props.clearScriptsAndBot}>
         

@@ -33,9 +33,9 @@ class BotSnippet extends React.Component {
                             </Form.Input>
                             {this.state.copied ? <p>Link copied to clipboard!</p> : null}
                             <div className="ui three buttons">
-                            <Button color="green" as={Link} to={`/bots/${this.props.bot.url_id}`}>Chat</Button>
-                            <Button color="blue" as={Link} to={`/edit-bot/${this.props.bot.url_id}`}>Edit</Button>
-                            <Button inverted color="red" onClick={() => this.props.delete(this.props.bot.id)}>Delete</Button>
+                            <Button inverted secondary as={Link} to={`/bots/${this.props.bot.url_id}`}>Chat</Button>
+                            <Button inverted secondary as={Link} to={`/edit-bot/${this.props.bot.url_id}`}>Edit</Button>
+                            <Button inverted secondary onClick={() => this.props.delete(this.props.bot.id)}>Delete</Button>
                             </div>
                             </Card.Content>
             </Card>

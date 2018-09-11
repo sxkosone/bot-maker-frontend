@@ -38,7 +38,8 @@ class BotMakerContainer extends React.Component {
 const mapDispatchToProps = dispatch => {
   return {
     giveBotName: (newName) => dispatch({type:"ADD_BOTNAME", botName: newName}),
-    giveBotDescription: (desc) => dispatch({ type: "ADD_BOT_DESCRIPTION", botDescription: desc })
+    giveBotDescription: (desc) => dispatch({ type: "ADD_BOT_DESCRIPTION", botDescription: desc }),
+    clearScriptsAndBot: () => dispatch({ type: "CLEAR_SCRIPTS" })
   }
 }
 
