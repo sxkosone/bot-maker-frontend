@@ -3,7 +3,8 @@ import { connect } from 'react-redux';
 import cuid from 'cuid';
 import { Redirect } from 'react-router-dom'
 
-const USER_URL = "http://localhost:3000/user"
+const USER_URL = "https://peaceful-journey-69488.herokuapp.com/user"
+const USERS_URL = "https://peaceful-journey-69488.herokuapp.com/users/"
 
 class SaveBotAndUser extends React.Component {
     state = {
@@ -45,7 +46,7 @@ class SaveBotAndUser extends React.Component {
                     const newTrigger = { text: pair.trigger, responses: newResponses }
                     return newTrigger
                 })
-                fetch(`http://localhost:3000/users/${userObj.id}`, {
+                fetch(USERS_URL+userObj.id, {
                     method: "PATCH",
                     headers: { 
                         "Content-Type": "application/json; charset=utf-8",
@@ -64,7 +65,7 @@ class SaveBotAndUser extends React.Component {
     }
     redirectToLogin = () => {
         this.props.addInfoMessage(`Almost done with your bot ${this.props.botName} - Login or sign up to finalize!`)
-        setTimeout(() => this.props.addInfoMessage(""), 5000)
+        
         var saveState = {
             goal: "successfully redirect user to login and back to save page"
           };

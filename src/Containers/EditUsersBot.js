@@ -4,8 +4,8 @@ import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import { Loader, Dimmer } from 'semantic-ui-react';
 
-const USER_URL = "http://localhost:3000/user"
-const BOT_URL = "http://localhost:3000/bots/"
+const USER_URL = "https://peaceful-journey-69488.herokuapp.com/user"
+const BOT_URL = "https://peaceful-journey-69488.herokuapp.com/bots/"
 
 
 class EditUsersBot extends React.Component {

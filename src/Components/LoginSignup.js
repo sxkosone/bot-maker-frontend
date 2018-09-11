@@ -5,7 +5,8 @@ import { Form, Button, Tab } from 'semantic-ui-react';
 import { withRouter } from 'react-router-dom'
 
 
-const LOGIN_URL = "http://localhost:3000/login"
+const LOGIN_URL = "https://peaceful-journey-69488.herokuapp.com/login"
+const USER_URL = "https://peaceful-journey-69488.herokuapp.com/users"
 
 class LoginSignup extends React.Component {
     state = {
@@ -64,7 +65,7 @@ class LoginSignup extends React.Component {
             password: this.state.password
         }
         
-        fetch("http://localhost:3000/users", {
+        fetch(USER_URL, {
             method: "POST",
             headers: { "Content-Type": "application/json; charset=utf-8"},
             body: JSON.stringify({"user": user})})
