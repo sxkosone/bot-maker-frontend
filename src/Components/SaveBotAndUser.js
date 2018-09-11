@@ -29,7 +29,6 @@ class SaveBotAndUser extends React.Component {
             .then(userObj => {
                 
                 //dispatch an action to state to update current user info!!
-                console.log("got back from backend this user", userObj)
                 this.props.setCurrentUser(userObj)
                 //debugger
                 const user = {
@@ -55,7 +54,6 @@ class SaveBotAndUser extends React.Component {
                     body: JSON.stringify({"user": user})})
                     .then(r => r.json())
                     .then(r => {
-                        console.log("I updated user and got this response:",r)
                         this.setState({
                             botReady: true
                         })
@@ -65,7 +63,7 @@ class SaveBotAndUser extends React.Component {
         }
     }
     redirectToLogin = () => {
-        this.props.addInfoMessage("Login or sign up to save your bot")
+        this.props.addInfoMessage(`Almost done with your bot ${this.props.botName} - Login or sign up to finalize!`)
         setTimeout(() => this.props.addInfoMessage(""), 5000)
         var saveState = {
             goal: "successfully redirect user to login and back to save page"

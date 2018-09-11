@@ -98,6 +98,7 @@ p.error-message {
 
 .App {
   height: 100vh;
+  padding-top: 41px;
   display: flex;
   flex-direction: column;
 }

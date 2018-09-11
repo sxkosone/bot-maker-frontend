@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import {Form,TextArea, Button} from 'semantic-ui-react';
+import {Form,TextArea, Button, Loader, Dimmer} from 'semantic-ui-react';
 
 const BOT_URL = "http://localhost:3000/training/"
 const CLASSIFIER_URL = "http://localhost:3000/classifier/"
@@ -13,45 +13,66 @@ class BotTraining extends React.Component {
         data1: "",
         data2: "",
         responses1: "",
-        responses2: ""
+        responses2: "",
+        message: "",
+        loading: true
     }
     componentDidMount() {
+        //retrieve existing scripts and training data from the backend!
         let token = localStorage.getItem("token")
-        fetch(CLASSIFIER_URL+this.props.botId, {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-                Accept: "application/json",
-                Authorization: `Bearer ${token}`
-            }
-        }).then(r => r.json())
-        .then(r => {
-            let responses1 = r.classifier_responses.filter(resp => resp.category === r.classifier.category_1)
-            let responses2 = r.classifier_responses.filter(resp => resp.category === r.classifier.category_2)
-            
-            this.setState({
-                category1: r.classifier.category_1,
-                category2: r.classifier.category_2,
-                data1: r.classifier.data_1,
-                data2: r.classifier.data_2,
-                responses1: responses1.map(obj => obj.text).join("//"),
-                responses2: responses2.map(obj => obj.text).join("//")
+        if(token) {
+            fetch(CLASSIFIER_URL+this.props.botId, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    Accept: "application/json",
+                    Authorization: `Bearer ${token}`
+                }
+            }).then(r => r.json())
+            .then(r => {
+                if(r.classifier) {
+                    let responses1 = r.classifier_responses.filter(resp => resp.category === r.classifier.category_1)
+                    let responses2 = r.classifier_responses.filter(resp => resp.category === r.classifier.category_2)
+                    
+                    this.setState({
+                        category1: r.classifier.category_1,
+                        category2: r.classifier.category_2,
+                        data1: r.classifier.data_1,
+                        data2: r.classifier.data_2,
+                        responses1: responses1.map(obj => obj.text).join("//"),
+                        responses2: responses2.map(obj => obj.text).join("//"),
+                        loading: false
+                    })
+                } else {
+                    this.setState({
+                        loading: false
+                    })
+                }
+                
             })
-        })
+        } else {
+            this.setState({
+                loading: false,
+                message: "You must be logged in to train bots!"
+            })
+        }
+        
     }
 
     handleSubmit = () => {
-        
+        this.setState({
+            loading: true
+        })
         let token = localStorage.getItem("token")
         
-        let notFilled = false
-        for(let input in this.state) {
-            if (this.state[input]==="") {
-                notFilled = true
-            }
-        }
+        // let notFilled = false
+        // for(let input in this.state) {
+        //     if (this.state[input]==="" && this.state.input !== "message") {
+        //         notFilled = true
+        //     }
+        // }
         
-        if (token && !notFilled) {
+        if (token) {
             const responses1Array = this.state.responses1.split("//")
             const responses2Array = this.state.responses2.split("//")
             const trainingData = {...this.state, responses: {responses1: responses1Array, responses2: responses2Array}}
@@ -65,9 +86,26 @@ class BotTraining extends React.Component {
                 },
                 body: JSON.stringify({"bot": trainingData})            
             })
-            .then(r => r.json()).then(console.log)
+            .then(r => r.json()).then(r => {
+                console.log(r)
+                this.setState({
+                    message: r.message,
+                    loading: false
+                })
+            })
         } else {
             console.log("unable to train your bot because reasons")
+            // if(!token) {
+            //     this.setState({
+            //         message: "Unable to train your bot unless all fields are filled!",
+            //         loading: false
+            //     })
+            // } else {
+            //     this.setState({
+            //         message: "Something went wrong, unable to train your bot at the moment.",
+            //         loading: false
+            //     })
+            // }
         }
     }
 
@@ -76,9 +114,20 @@ class BotTraining extends React.Component {
             [e.target.name]: e.target.value
         })
     }
+
+    showLoader = () => {
+        if(this.state.loading) {
+            return (
+                <Dimmer active inverted>
+                    <Loader inverted>Loading</Loader>
+                </Dimmer>
+            )
+        }
+    }
     render() {
         return(
             <div className="BotTraining content">
+            {this.showLoader()}
             <h1>Train your bot to recognize categories</h1>
             <p className="highlight">This app uses machine learning to make bots better at recognising users' messages. You can add two categories, between which your bot should be able to distinguish. You should also add training data, like sentences or words, that represent that category. This text will be used to teach the bot what messages should belong to which category.</p>
             <Form>

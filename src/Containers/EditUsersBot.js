@@ -2,6 +2,7 @@ import React from 'react';
 import BotMakerContainer from './BotMakerContainer';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
+import { Loader, Dimmer } from 'semantic-ui-react';
 
 const USER_URL = "http://localhost:3000/user"
 const BOT_URL = "http://localhost:3000/bots/"
@@ -42,6 +43,7 @@ class EditUsersBot extends React.Component {
             fetch(BOT_URL+match.url_id)
             .then(r => r.json())
             .then(response => {
+                
                 const defaultScripts = response.include_default_scripts === null ? true : response.include_default_scripts 
                 this.props.addScriptsFromBackendToState(response.scripts)
                 this.props.addNameFromBackendToState(response.bot_name)
@@ -51,16 +53,26 @@ class EditUsersBot extends React.Component {
                 this.setState({
                     scriptsReady: true
                 })
+                
             })
         })
+    }
+    showLoader = () => {
+        if(!this.state.scriptsReady) {
+            return (
+                <Dimmer active inverted>
+                    <Loader inverted>Loading</Loader>
+                </Dimmer>
+            )
+        }
     }
 
     render() {
         return(
             <div className="EditUsersBot content">
             {this.state.redirect ? <Redirect to="/" /> : null}
-            <h1>Edit your Bot</h1>
-                {this.state.scriptsReady ? <BotMakerContainer /> : null}
+            {this.showLoader()}
+            {this.state.scriptsReady ? <BotMakerContainer /> : null}
             </div>
         )
     }

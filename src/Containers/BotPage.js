@@ -11,6 +11,7 @@ const SCRIPT_URL = "http://localhost:3000/find-answer"
 class BotPage extends React.Component {
     state = {
         userInput: "",
+        errorMessage: "",
         messageHistory: [] //holds messages between human and bot
     }
     componentDidMount() {
@@ -18,8 +19,11 @@ class BotPage extends React.Component {
         .then(response => {
             if(response.success) {
                 this.props.setBotName(response.bot_name)
+                this.props.setBotDescription(response.description)
             } else {
-                this.props.setErrorMessage("No bot lives in this address")
+                this.setState({
+                    errorMessage: "No bot lives in this address"
+                })
             }
             
         })
@@ -59,6 +63,7 @@ class BotPage extends React.Component {
         return (
             <React.Fragment>
                 <h1>Chat with {this.props.botName}</h1>
+                <p>{this.props.botDescription}</p>
                 <MessageHistory history={this.state.messageHistory}/>
                 <Form onSubmit={this.handleUserSend}>
                     <Form.Group>
@@ -66,14 +71,14 @@ class BotPage extends React.Component {
 
                     </Form.Group>
                 </Form>
-                {localStorage.getItem("token") ? <Button inverted color="blue" as={Link} to="/my-page">Back to your bots</Button> : null}
+                {localStorage.getItem("token") ? <Button inverted color="blue" as={Link} to="/my-page">Back to your bots</Button> : <Button inverted color="blue" as={Link} to="/create">Build your own chatbot</Button>}
             </React.Fragment>
         )
     }
 
     render() {
         return(
-            <div className="BotPage">{this.props.errorMessage === "No bot lives in this address" ? <h1>{this.props.errorMessage}.<br/> <Button inverted size="huge" as={Link} to="/create">Create your bot here</Button></h1> : this.renderBotPage()}</div>
+            <div className="BotPage content">{this.state.errorMessage === "No bot lives in this address" ? <h1>{this.state.errorMessage}.<br/> <Button inverted size="huge" as={Link} to="/create">Create your bot here</Button></h1> : this.renderBotPage()}</div>
         )
     }
 }
@@ -81,14 +86,14 @@ class BotPage extends React.Component {
 const mapStateToProps = state => {
     return {
         botName: state.userAndBot.botName,
-        errorMessage: state.messages.error
+        botDescription: state.userAndBot.botDescription
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
         setBotName: (botName) => dispatch({ type: "ADD_BOTNAME", botName: botName }),
-        setErrorMessage: (message) => dispatch({ type: "ADD_ERROR_MESSAGE", error: message })
+        setBotDescription: (desc) => dispatch({ type: "ADD_BOT_DESCRIPTION", botDescription: desc })
     }
 }
 

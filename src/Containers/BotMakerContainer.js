@@ -22,7 +22,7 @@ class BotMakerContainer extends React.Component {
   render() {
     return (
       <div className="BotMakerContainer">
-        <h1>Create a chatbot</h1>
+        {this.state.nameInput === "" ? <h1>Build your chatbot</h1> : <h1>Edit {this.state.nameInput}</h1>}
         <h2>Botname</h2>
         <Form.Input fluid name="nameInput" type="text" value={this.state.nameInput} onChange={this.handleChange}/>
         <h2>Description</h2>

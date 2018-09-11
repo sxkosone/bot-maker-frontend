@@ -138,7 +138,7 @@ class LoginSignup extends React.Component {
 
     render() {
         return(
-        <div className="LoginSignup content">
+        <div className="LoginSignup">
             <div className="container">
                 {/* {this.props.info !== "" ? <Message color="violet">{this.props.info}</Message> : null} */}
                 {this.renderRedirect()}
@@ -152,8 +152,7 @@ class LoginSignup extends React.Component {
 
 const mapDispatchToProps = dispatch => {
     return {
-        setCurrentUser: (current) => dispatch({ type: "LOG_IN", currentUser: current }),
-        addErrorMessage: (message) => dispatch({ type: "ADD_ERROR_MESSAGE", error: message })
+        setCurrentUser: (current) => dispatch({ type: "LOG_IN", currentUser: current })
     }
 }
 

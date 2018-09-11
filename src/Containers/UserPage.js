@@ -60,6 +60,7 @@ class UserPage extends React.Component {
                 this.setState({user: response.user})
             } else {
                 this.props.addErrorMessage(response.message)
+                setTimeout(() => this.props.addErrorMessage(""))
             }
         })
     }
