@@ -48,21 +48,23 @@ class BotChatContainer extends React.Component {
 
     render() {
         return(
-        <div className="botChatContainer">
-            <h2>{this.props.botName === "" ? "Chat with your bot" : `Chat with ${this.props.botName} the bot`}</h2>
-            <p>Send messages to your bot to see how your scripts are working! Please note that this is a developmental chat view - the default scripts are not available until you save the bot.</p>
+            <React.Fragment>
+        <div className="botChatContainer content">
+            <h1>Test chat</h1>
+            <p>Send messages to {this.props.botName === "" ? "your bot" : this.props.botName} to see how your scripts are working! Please note that this is a developmental chat view - the default scripts are not available until you save the bot.</p>
             <MessageHistory history={this.state.messageHistory}/>
-            <Form onSubmit={this.handleUserSend}>
-            <Form.Group>
-                <Form.Input type="text" value={this.state.userInput} onChange={this.handleUserTyping} action={<Form.Input type="submit" value="Send" />}/>
-                
+            <Form className="message-send" onSubmit={this.handleUserSend}>
+            <Form.Group className="message-send">
+                <Form.Input className="message-send" type="text" value={this.state.userInput} onChange={this.handleUserTyping} action={<Form.Input className="button-send" type="submit" value="Send" />}/>
                 </Form.Group>
             </Form>
-            <Button.Group className="Buttons">
-                <Button primary as={ Link } to="/create"><Icon name="arrow left"/>Back to editing</Button>
-                <Button color="green" as={ Link } to="/save-bot">My bot is ready<Icon name="arrow right"/></Button>
-            </Button.Group>
+            
         </div>
+        <Button.Group className="Buttons">
+            <Button size="large" primary as={ Link } to="/create"><Icon name="arrow left"/>Back to editing</Button>
+            <Button size="large" color="green" as={ Link } to="/save-bot">My bot is ready<Icon name="arrow right"/></Button>
+        </Button.Group>
+        </React.Fragment>
 
         )
     }

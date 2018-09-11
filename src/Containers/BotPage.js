@@ -1,5 +1,5 @@
 import React from 'react';
-import { connect } from 'react-redux';
+// import { connect } from 'react-redux';
 import { Form, Button } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 
@@ -12,14 +12,20 @@ class BotPage extends React.Component {
     state = {
         userInput: "",
         errorMessage: "",
+        botName: "",
+        botDescription: "",
         messageHistory: [] //holds messages between human and bot
     }
     componentDidMount() {
         fetch(BOT_URL+this.props.botId).then(r => r.json())
         .then(response => {
             if(response.success) {
-                this.props.setBotName(response.bot_name)
-                this.props.setBotDescription(response.description)
+                // this.props.setBotName(response.bot_name)
+                // this.props.setBotDescription(response.description)
+                this.setState({
+                    botName: response.bot_name,
+                    botDescription: response.description
+                })
             } else {
                 this.setState({
                     errorMessage: "No bot lives in this address"
@@ -61,9 +67,9 @@ class BotPage extends React.Component {
 
     renderBotPage = () => {
         return (
-            <React.Fragment>
-                <h1>Chat with {this.props.botName}</h1>
-                <p>{this.props.botDescription}</p>
+            <div id="WelcomeContent">
+                <h1>Chat with {this.state.botName}</h1>
+                <p>{this.state.botDescription}</p>
                 <MessageHistory history={this.state.messageHistory}/>
                 <Form onSubmit={this.handleUserSend}>
                     <Form.Group>
@@ -71,30 +77,30 @@ class BotPage extends React.Component {
 
                     </Form.Group>
                 </Form>
-                {localStorage.getItem("token") ? <Button inverted color="blue" as={Link} to="/my-page">Back to your bots</Button> : <Button inverted color="blue" as={Link} to="/create">Build your own chatbot</Button>}
-            </React.Fragment>
+                {localStorage.getItem("token") ? <Button inverted as={Link} to="/my-page">Back to your bots</Button> : <Button inverted as={Link} to="/create">Build your own chatbot</Button>}
+            </div>
         )
     }
 
     render() {
         return(
-            <div className="BotPage content">{this.state.errorMessage === "No bot lives in this address" ? <h1>{this.state.errorMessage}.<br/> <Button inverted size="huge" as={Link} to="/create">Create your bot here</Button></h1> : this.renderBotPage()}</div>
+            <div className="WelcomeContainer">{this.state.errorMessage === "No bot lives in this address" ? <h1>{this.state.errorMessage}.<br/> <Button inverted size="huge" as={Link} to="/create">Create your bot here</Button></h1> : this.renderBotPage()}</div>
         )
     }
 }
 
-const mapStateToProps = state => {
-    return {
-        botName: state.userAndBot.botName,
-        botDescription: state.userAndBot.botDescription
-    }
-}
+// const mapStateToProps = state => {
+//     return {
+//         botName: state.userAndBot.botName,
+//         botDescription: state.userAndBot.botDescription
+//     }
+// }
 
-const mapDispatchToProps = dispatch => {
-    return {
-        setBotName: (botName) => dispatch({ type: "ADD_BOTNAME", botName: botName }),
-        setBotDescription: (desc) => dispatch({ type: "ADD_BOT_DESCRIPTION", botDescription: desc })
-    }
-}
+// const mapDispatchToProps = dispatch => {
+//     return {
+//         setBotName: (botName) => dispatch({ type: "ADD_BOTNAME", botName: botName }),
+//         setBotDescription: (desc) => dispatch({ type: "ADD_BOT_DESCRIPTION", botDescription: desc })
+//     }
+// }
 
-export default connect(mapStateToProps, mapDispatchToProps)(BotPage);
+export default BotPage;

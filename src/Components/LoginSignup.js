@@ -93,7 +93,7 @@ class LoginSignup extends React.Component {
     renderLoginForm() {
         return(
             <Form onSubmit={this.login}>
-            
+            <br />
             <h2>Login</h2>
             
                 <Form.Field>
@@ -104,7 +104,7 @@ class LoginSignup extends React.Component {
                 <label>Password</label>
                 <input type="password" placeholder='Password' value={this.state.password} onChange={(e) => this.setState({password: e.target.value})} required/>
                 </Form.Field>
-                <Button inverted type='submit'>Login</Button>
+                <Button color="black" type='submit'>Login</Button>
             </Form>
         )
     }
@@ -112,6 +112,7 @@ class LoginSignup extends React.Component {
     renderSignUpForm() {
         return (
             <Form onSubmit={this.signup}>
+            <br />
             <h2>Sign up</h2>
                 <Form.Field>
                 <label>Username</label>
@@ -121,7 +122,7 @@ class LoginSignup extends React.Component {
                 <label>Password</label>
                 <input type="password" placeholder='Password' value={this.state.password} onChange={(e) => this.setState({password: e.target.value})} required/>
                 </Form.Field>
-                <Button inverted color="green" type='submit'>Signup</Button>
+                <Button color="blue" type='submit'>Signup</Button>
             </Form>
         )
     }

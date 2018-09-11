@@ -64,7 +64,7 @@ class BotScriptContainer extends React.Component {
     return <p>Train your bot to categorize between two separate classes - add mood detection, for example. This uses machine learning to train your bot to recognize if a message belongs to a category, and what the bot should respond in that case.</p>
   }
   machineLearningControls = () => {
-    if (localStorage.getItem("token")) {
+    if (this.props.botUrl !== "") {
       return <React.Fragment>
             <h2>Classifier</h2>
             <Checkbox toggle checked={this.state.includeClassifier} onClick={() => this.setState({ includeClassifier: !this.state.includeClassifier })} label="Machine learning ON/OFF"/>
@@ -88,9 +88,11 @@ class BotScriptContainer extends React.Component {
         <Form onSubmit={this.handleSubmit}>
         {this.state.pairs.map((pair, index) => <TriggerResponsePair key={index} index={index} pair={pair} handleEdits={this.handleEdits} addPair={this.props.addPair} delete={this.deleteTriggerResponsePair}/>)}
         <Divider />
-        <Button color="green" onClick={this.addNewTriggerResponsePair}><Icon name="plus"/>Add a new trigger</Button>
-        <Button floated="right" color="blue" type="submit">Save and chat<Icon name="arrow right"/></Button>
+        
+        <Button color="black" onClick={this.addNewTriggerResponsePair}><Icon name="plus"/>Add a new trigger</Button>
+        <Button floated="right" primary type="submit">Save and chat<Icon name="arrow right"/></Button>
         </Form>
+        <br />
       </div>
     );
   }

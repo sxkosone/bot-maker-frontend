@@ -1,7 +1,7 @@
 body {
   margin: 0;
   padding: 0;
-  background-color: #efd5ff;
+  background-color: #e3ffe7;
 }
 
 
@@ -10,10 +10,9 @@ body h1, h2, h3, p, a {
 }
 
 p.info-message {
-  color: white;
   text-align: center;
   font-size: 1.5rem;
-  padding-top: 0.5rem;
+  padding-top: 0.6rem;
 }
 
 p.error-message {
@@ -22,15 +21,28 @@ p.error-message {
   font-size: 1.5rem;
 }
 
-.content {
-  padding: 1.6rem 0.8rem;
-  margin: auto;
-  background: linear-gradient(0deg, #efd5ff 0%, #515ada 100%);
-  /* background: linear-gradient(0deg, #e3ffe7 0%, #d9e7ff 100%); cucumber water*/ 
-  /* background-color: #21D4FD;
-  background-image: linear-gradient(19deg, #21D4FD 0%, #B721FF 100%);  */
-  height: 100%;
-  max-width: 600px;
+
+
+@media only screen and (min-width: 800px) {
+  .content {
+    padding: 3rem 1rem;
+    margin: auto;
+    background-color: #e3ffe7;
+    height: 100%;
+    max-width: 800px;
+  }
+}
+
+@media only screen and (max-width: 800px) {
+  .content {
+    padding: 3rem 1rem;
+    margin: auto;
+    background-color: #08AEEA;
+    /* background-image: linear-gradient(180deg, #08AEEA 0%, #2AF598 100%); */
+    background: linear-gradient(0deg, #e3ffe7 0%, #d9e7ff 100%);
+    height: 100%;
+    max-width: 800px;
+  }
 }
 
 .highlight {
@@ -51,18 +63,15 @@ p.error-message {
 
 .botChatContainer {
   display: flex;
-  padding: 1rem;
+  padding: 0rem 1rem;
   flex-direction: column;
 }
 
-.messageHistory {
-  /*margin: auto;*/
+#messageHistory {
   padding: 1rem;
   background-color: white;
-  border: 2px solid lightblue;
-  border-radius: 2px;
-  height: 50vh;
-  min-width: 100%;
+  height: 60vh;
+  width: 100%;
   overflow: scroll;
 }
 
@@ -78,10 +87,10 @@ p.error-message {
 .WelcomeContainer {
   display: flex;
   /* height: 100%; */
-  background: linear-gradient(200deg, #21D4FD, #B721FF);
+  background: linear-gradient(230deg, #08AEEA 0%, #2AF598 100%);
   background-size: 600% 600%;
   background-attachment: fixed;
-  min-height: 93.4vh;
+  min-height: 95vh;
   animation: Gradient 10s ease infinite;
 }
 #WelcomeContent {
@@ -89,8 +98,21 @@ p.error-message {
   padding: 1rem;
 }
 #WelcomeContent h1 {
+  text-align: left;
+}
+h1 {
   font-size: 4rem;
   font-weight: 900;
+  text-align: center;
+}
+
+.BotPage {
+  padding: 2rem;
+  background: linear-gradient(230deg, #08AEEA 0%, #2AF598 100%);
+  background-size: 600% 600%;
+  background-attachment: fixed;
+  min-height: 100vh;
+  animation: Gradient 10s ease infinite;
 }
 .Buttons {
   margin: auto;
@@ -135,6 +157,20 @@ p.error-message {
 /*USER INFO PAGE*/
 .shareLink .input {
   width: 100%;
+}
+
+.message-send {
+  width: 100%;
+  padding: 0px;
+  margin: 0px;
+}
+
+.ui.action.input input {
+  border-radius: 0px;
+}
+
+.button-send input{
+  border-radius: 0px;
 }
 
 /*animation*/

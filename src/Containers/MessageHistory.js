@@ -1,31 +1,43 @@
 import React from 'react';
-import scrollIntoView from "scroll-into-view";
 
 
-const MessageHistory = (props) => {
+class MessageHistory extends React.Component {
     //receives messagehistory as props!
 
-    //scrolling not working
-    const scrollDiv = () => {
-        return <div id="scroll"> </div>
-    }
-    const scrollDown = () => {
-        scrollIntoView(scrollDiv());
-    }
-    ////
+    scrollToBottom = () => {
+        this.messagesEnd.scrollIntoView({ behavior: "smooth" });
+      }
+      
+      componentDidMount() {
+        this.scrollToBottom();
+      }
+      
+      componentDidUpdate() {
+        this.scrollToBottom();
+      }
     
-    const renderSentMessages = () => {
-        return props.history.map((message, index) => {
+    renderSentMessages = () => {
+        return this.props.history.map((message, index) => {
             return <p key={index} className={`${message.sender}-message speech-bubble`}>{message.text}</p>
         })
     }
     
+    render() {
+        return(
+            <React.Fragment>
+                <div id="messageHistory">
+                {this.renderSentMessages()}
+                {/* dummy div to enable scroll down with new messages */}
+                <div style={{ float:"left", clear: "both" }}
+                ref={(el) => { this.messagesEnd = el; }}>
+                </div>
+                </div>
     
-    return(
-        <div className="messageHistory">
-        {renderSentMessages()}
-        </div>
-    )
+                
+            </React.Fragment>
+        )
+    }
+    
 }
 
 export default MessageHistory;

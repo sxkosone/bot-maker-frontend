@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import {Form,TextArea, Button, Loader, Dimmer} from 'semantic-ui-react';
+import {Form, Button, Loader, Dimmer} from 'semantic-ui-react';
 
 const BOT_URL = "https://peaceful-journey-69488.herokuapp.com/training/"
 const CLASSIFIER_URL = "https://peaceful-journey-69488.herokuapp.com/classifier/"
@@ -16,7 +16,7 @@ class BotTraining extends React.Component {
         responses2: "",
         message: "",
         loading: true
-    }
+        }
     componentDidMount() {
         //retrieve existing scripts and training data from the backend!
         let token = localStorage.getItem("token")
@@ -92,6 +92,7 @@ class BotTraining extends React.Component {
                     message: r.message,
                     loading: false
                 })
+                setTimeout(() => this.setState({ message: "" }), 10000)
             })
         } else {
             console.log("unable to train your bot because reasons")
@@ -128,8 +129,10 @@ class BotTraining extends React.Component {
         return(
             <div className="BotTraining content">
             {this.showLoader()}
-            <h1>Train your bot to recognize categories</h1>
-            <p className="highlight">This app uses machine learning to make bots better at recognising users' messages. You can add two categories, between which your bot should be able to distinguish. You should also add training data, like sentences or words, that represent that category. This text will be used to teach the bot what messages should belong to which category.</p>
+            {this.state.message !== "" ? <h2>{this.state.message}!</h2> : null}
+            <h1>Train your bot</h1>
+            <h2>Bots can learn to classify messages to two different categories</h2>
+            <p>This app uses machine learning to make bots better at recognising users' messages. You can add two categories, between which your bot should be able to distinguish. You should also add training data, like sentences or words, that represent that category. This text will be used to teach the bot what messages should belong to which category.</p>
             <Form>
                 <Form.Group widths="equal">
                     <Form.Input required name="category1" onChange={this.handleChange} fluid label='Category #1' placeholder='Name your category with a word, like "happy"' value={this.state.category1}/>
