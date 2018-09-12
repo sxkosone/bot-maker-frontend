@@ -12,6 +12,7 @@ export default rootReducer;
 function manageScript(state = {
     includeDefaultScripts: true,
     includeClassifier: true,
+    fallback: [],
     scripts: []
 }, action) {
     //stores an array of trigger-response objects
@@ -27,7 +28,10 @@ function manageScript(state = {
         case "ADD_CLASSIFIER":
             return {...state, includeClassifier: action.selection}
         case "CLEAR_SCRIPTS":
-            return {includeDefaultScripts: true, includeClassifier: true, scripts: []}
+            return {includeDefaultScripts: true, includeClassifier: true, scripts: [], fallback: []}
+        case "ADD_FALLBACK":
+            let newCleanFallback = action.fallback.filter(f => f)
+            return {...state, fallback: newCleanFallback}
         default:
             return state
     }

@@ -3,8 +3,11 @@ import { connect } from 'react-redux';
 import cuid from 'cuid';
 import { Redirect } from 'react-router-dom'
 
-const USER_URL = "https://peaceful-journey-69488.herokuapp.com/user"
-const USERS_URL = "https://peaceful-journey-69488.herokuapp.com/users/"
+// const USER_URL = "https://peaceful-journey-69488.herokuapp.com/user"
+// const USERS_URL = "https://peaceful-journey-69488.herokuapp.com/users/"
+const USER_URL = "http://localhost:3000/user"
+const USERS_URL = "http://localhost:3000/users/"
+
 
 class SaveBotAndUser extends React.Component {
     state = {
@@ -38,7 +41,8 @@ class SaveBotAndUser extends React.Component {
                     bot_description: this.props.botDescription,
                     bot_url_id: this.props.botUrl ? this.props.botUrl : cuid(),
                     include_default_scripts: this.props.includeDefaultScripts,
-                    include_classifier: this.props.includeClassifier
+                    include_classifier: this.props.includeClassifier,
+                    fallback: this.props.fallback
                 }
                 user.triggers = this.props.scripts.map(pair => {
                     
@@ -103,7 +107,8 @@ const mapStateToProps = state => {
         currentUser: state.userAndBot.currentUser,
         includeDefaultScripts: state.scripts.includeDefaultScripts,
         includeClassifier: state.scripts.includeClassifier,
-        botDescription: state.userAndBot.botDescription
+        botDescription: state.userAndBot.botDescription,
+        fallback: state.scripts.fallback
     }
 }
 

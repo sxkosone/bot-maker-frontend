@@ -27,7 +27,7 @@ class BotChatContainer extends React.Component {
     makeBotResponse = (userMessage) => {
         const cleanUserMessage = userMessage.replace(/\s/g,'').toLowerCase()
         //if no match, output default message "I don't understand"
-        let botResponse = "I don't understand :("
+        let botResponse = ""
         //check if any trigger words match latest user message
         this.props.scripts.forEach(pair => {
             const cleanTrigger = pair.trigger.replace(/\s/g,'').toLowerCase()
@@ -40,6 +40,13 @@ class BotChatContainer extends React.Component {
                 botResponse = pair.response[randomI]
             }
         })
+        if (botResponse === "" && this.props.fallback.length > 0) {
+            let randomI = Math.floor(Math.random()*this.props.fallback.length);
+            botResponse = this.props.fallback[randomI]
+        } else if (botResponse === ""){
+            botResponse = "I don't understand :("
+        }
+            
         //push a new bot message into the state.messageHistory
         this.setState({
             messageHistory: [...this.state.messageHistory, {sender: "bot", text: botResponse}]
@@ -76,6 +83,7 @@ class BotChatContainer extends React.Component {
 const mapStateToProps = state => {
     return {
         scripts: state.scripts.scripts,
+        fallback: state.scripts.fallback,
         botName: state.userAndBot.botName
     }
 }

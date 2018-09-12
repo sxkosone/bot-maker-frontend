@@ -5,8 +5,12 @@ import { Link } from 'react-router-dom';
 
 import MessageHistory from './MessageHistory';
 
-const BOT_URL = "https://peaceful-journey-69488.herokuapp.com/bots/"
-const SCRIPT_URL = "https://peaceful-journey-69488.herokuapp.com/find-answer"
+// const BOT_URL = "https://peaceful-journey-69488.herokuapp.com/bots/"
+// const SCRIPT_URL = "https://peaceful-journey-69488.herokuapp.com/find-answer"
+
+
+const SCRIPT_URL = "http://localhost:3000/find-answer"
+const BOT_URL = "http://localhost:3000/bots/"
 
 class BotPage extends React.Component {
     state = {
@@ -19,6 +23,7 @@ class BotPage extends React.Component {
     componentDidMount() {
         fetch(BOT_URL+this.props.botId).then(r => r.json())
         .then(response => {
+            console.log(response)
             if(response.success) {
                 // this.props.setBotName(response.bot_name)
                 // this.props.setBotDescription(response.description)

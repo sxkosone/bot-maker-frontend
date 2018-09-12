@@ -9,6 +9,7 @@ class BotScriptContainer extends React.Component {
     redirectToChat: false,
     includeDefaultScripts: this.props.includeDefaultScripts,
     includeClassifier: this.props.includeClassifier,
+    fallback: this.props.fallback.join("//"),
     pairs: [...this.props.stringifiedScripts, {trigger: "", response: ""}] //will hold each new trigger-response pair object
   }
 
@@ -22,6 +23,11 @@ class BotScriptContainer extends React.Component {
      pairs: [...newPairArray]
     })
   }
+  handleFallback = (e) => {
+    this.setState({
+      fallback: e.target.value
+    })
+  }
 
   handleSubmit = (e) => {
     //submit does 3 things: 1)saves scripts & 2)botname to redux state and 3) redirects to chat page 
@@ -31,6 +37,8 @@ class BotScriptContainer extends React.Component {
       const newResponseArray = pair.response.split("//")
       return {...pair, response: newResponseArray}
     })
+    const newFallback = this.state.fallback.split("//")
+    this.props.addFallback(newFallback)
     this.props.nameBot()
     this.props.addNewPairs(newArr)
     this.props.addDefaultScriptsSelector(this.state.includeDefaultScripts) //default scripts on/off
@@ -88,6 +96,9 @@ class BotScriptContainer extends React.Component {
         <p>Add some script to your bot. What "triggers" should the bot respond to? Separate responses with "//" to add multiple responses to the same trigger.</p>
         <Form onSubmit={this.handleSubmit}>
         {this.state.pairs.map((pair, index) => <TriggerResponsePair key={index} index={index} pair={pair} handleEdits={this.handleEdits} addPair={this.props.addPair} delete={this.deleteTriggerResponsePair}/>)}
+        <h2>Fallback answer</h2>
+        <p>What should the bot say if it doesn't understand? You can add several responses, separated with a "//".</p>
+        <Form.Input type="text" name="fallback" value={this.state.fallback} onChange={this.handleFallback}/>
         <Divider />
         
         <Button className={window.innerWidth<380 ? "fluid" : null} color="black" onClick={this.addNewTriggerResponsePair}><Icon name="plus"/>Add a new trigger</Button>
@@ -110,6 +121,7 @@ const mapStateToProps = state => {
     stringifiedScripts: stringScripts,
     botName: state.userAndBot.botName,
     botUrl: state.userAndBot.botUrl,
+    fallback: state.scripts.fallback,
     includeDefaultScripts: state.scripts.includeDefaultScripts,
     includeClassifier: state.scripts.includeClassifier
   }
@@ -118,6 +130,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     addNewPairs: (array) => dispatch({type: "ADD_MANY_NEW_PAIRS", newPairs: array }),
+    addFallback: (fallback) => dispatch({type: "ADD_FALLBACK", fallback: fallback}),
     addDefaultScriptsSelector: (boolean) => dispatch({ type: "ADD_INCLUDE_DEFAULT_SCRIPTS", selection: boolean }),
     addClassifierSelector: (boolean) => dispatch({ type: "ADD_CLASSIFIER", selection: boolean })
   }

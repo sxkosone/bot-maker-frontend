@@ -4,9 +4,11 @@ import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import { Loader, Dimmer } from 'semantic-ui-react';
 
-const USER_URL = "https://peaceful-journey-69488.herokuapp.com/user"
-const BOT_URL = "https://peaceful-journey-69488.herokuapp.com/bots/"
+// const USER_URL = "https://peaceful-journey-69488.herokuapp.com/user"
+// const BOT_URL = "https://peaceful-journey-69488.herokuapp.com/bots/"
 
+const USER_URL = "http://localhost:3000/user"
+const BOT_URL = "http://localhost:3000/bots/"
 
 class EditUsersBot extends React.Component {
     state = {
@@ -50,6 +52,7 @@ class EditUsersBot extends React.Component {
                 this.props.addDefaultScriptsSelector(defaultScripts)
                 this.props.addBotUrlFromBackendToState(match.url_id)
                 this.props.addBotDescriptionFromBackendToState(response.description)
+                this.props.addFallbackFromBackendToState(response.fallback)
                 this.setState({
                     scriptsReady: true
                 })
@@ -84,7 +87,8 @@ const mapDispatchToProps = dispatch => {
         addNameFromBackendToState: (name) => dispatch({ type: "ADD_BOTNAME", botName: name }),
         addBotUrlFromBackendToState: (url) => dispatch({ type: "ADD_BOT_URL", url: url }),
         addBotDescriptionFromBackendToState: (desc) => dispatch({ type: "ADD_BOT_DESCRIPTION", botDescription: desc }),
-        addDefaultScriptsSelector: (boolean) => dispatch({ type: "ADD_INCLUDE_DEFAULT_SCRIPTS", selection: boolean})
+        addDefaultScriptsSelector: (boolean) => dispatch({ type: "ADD_INCLUDE_DEFAULT_SCRIPTS", selection: boolean}),
+        addFallbackFromBackendToState: (fallback) => dispatch({ type: "ADD_FALLBACK", fallback: fallback})
     }
 }
 
