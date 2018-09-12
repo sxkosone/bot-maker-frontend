@@ -3,8 +3,11 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import {Form, Button, Loader, Dimmer, Icon} from 'semantic-ui-react';
 
-const BOT_URL = "https://peaceful-journey-69488.herokuapp.com/training/"
-const CLASSIFIER_URL = "https://peaceful-journey-69488.herokuapp.com/classifier/"
+// const BOT_URL = "https://peaceful-journey-69488.herokuapp.com/training/"
+// const CLASSIFIER_URL = "https://peaceful-journey-69488.herokuapp.com/classifier/"
+
+const BOT_URL = "http://localhost:3000/training/"
+const CLASSIFIER_URL = "http://localhost:3000/classifier/"
 
 class BotTraining extends React.Component {
     state = {
@@ -116,7 +119,7 @@ class BotTraining extends React.Component {
         if(this.state.loading) {
             return (
                 <Dimmer active inverted>
-                    <Loader size="huge" inverted>Training...</Loader>
+                    <Loader size="huge" inverted>Loading...</Loader>
                 </Dimmer>
             )
         }

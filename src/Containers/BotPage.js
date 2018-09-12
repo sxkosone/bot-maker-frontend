@@ -77,11 +77,16 @@ class BotPage extends React.Component {
                 <p>{this.state.botDescription}</p>
                 <MessageHistory history={this.state.messageHistory}/>
                 <Form onSubmit={this.handleUserSend}>
-                    <Form.Group>
+                    {/* <Form.Group>
                     <Form.Input type="text" value={this.state.userInput} onChange={this.handleUserTyping} action={<Form.Input type="submit" value="Send" />}/>
 
-                    </Form.Group>
+                    </Form.Group> */}
+            <Form.Group className="message-send">
+                <Form.Input className="message-send" type="text" value={this.state.userInput} onChange={this.handleUserTyping} action={<Form.Input className="button-send" type="submit" value="Send" />}/>
+            </Form.Group>
+                    
                 </Form>
+                
                 {localStorage.getItem("token") ? <Button inverted as={Link} to="/my-page">Back to your bots</Button> : <Button inverted as={Link} to="/create">Build your own chatbot</Button>}
             </div>
         )
@@ -94,18 +99,6 @@ class BotPage extends React.Component {
     }
 }
 
-// const mapStateToProps = state => {
-//     return {
-//         botName: state.userAndBot.botName,
-//         botDescription: state.userAndBot.botDescription
-//     }
-// }
 
-// const mapDispatchToProps = dispatch => {
-//     return {
-//         setBotName: (botName) => dispatch({ type: "ADD_BOTNAME", botName: botName }),
-//         setBotDescription: (desc) => dispatch({ type: "ADD_BOT_DESCRIPTION", botDescription: desc })
-//     }
-// }
 
 export default BotPage;
