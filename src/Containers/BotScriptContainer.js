@@ -96,12 +96,13 @@ class BotScriptContainer extends React.Component {
         <p>Add some script to your bot. What "triggers" should the bot respond to? Separate responses with "//" to add multiple responses to the same trigger.</p>
         <Form onSubmit={this.handleSubmit}>
         {this.state.pairs.map((pair, index) => <TriggerResponsePair key={index} index={index} pair={pair} handleEdits={this.handleEdits} addPair={this.props.addPair} delete={this.deleteTriggerResponsePair}/>)}
+        <Button className={window.innerWidth<380 ? "fluid" : null} floated="right" color="black" onClick={this.addNewTriggerResponsePair}><Icon name="plus"/>Add a new trigger</Button>
+
         <h2>Fallback answer</h2>
         <p>What should the bot say if it doesn't understand? You can add several responses, separated with a "//".</p>
         <Form.Input type="text" name="fallback" value={this.state.fallback} onChange={this.handleFallback}/>
         <Divider />
         
-        <Button className={window.innerWidth<380 ? "fluid" : null} color="black" onClick={this.addNewTriggerResponsePair}><Icon name="plus"/>Add a new trigger</Button>
         <Button className={window.innerWidth<380 ? "fluid" : null} floated="right" primary type="submit">Save and chat<Icon name="arrow right"/></Button>
         </Form>
         <br />
