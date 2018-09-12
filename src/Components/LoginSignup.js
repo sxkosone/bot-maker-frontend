@@ -5,11 +5,11 @@ import { Form, Button, Tab, Dimmer, Loader } from 'semantic-ui-react';
 import { withRouter } from 'react-router-dom'
 
 
-// const LOGIN_URL = "https://peaceful-journey-69488.herokuapp.com/login"
-// const USER_URL = "https://peaceful-journey-69488.herokuapp.com/users"
+const LOGIN_URL = "https://peaceful-journey-69488.herokuapp.com/login"
+const USER_URL = "https://peaceful-journey-69488.herokuapp.com/users"
 
-const USER_URL = "http://localhost:3000/users"
-const LOGIN_URL = "http://localhost:3000/login"
+// const USER_URL = "http://localhost:3000/users"
+// const LOGIN_URL = "http://localhost:3000/login"
 
 class LoginSignup extends React.Component {
     state = {
