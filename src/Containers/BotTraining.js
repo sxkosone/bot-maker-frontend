@@ -115,8 +115,8 @@ class BotTraining extends React.Component {
     showLoader = () => {
         if(this.state.loading) {
             return (
-                <Dimmer active>
-                    <Loader size="large" inverted>Training...</Loader>
+                <Dimmer active inverted>
+                    <Loader size="huge" inverted>Training...</Loader>
                 </Dimmer>
             )
         }
@@ -137,8 +137,9 @@ class BotTraining extends React.Component {
     }
     render() {
         return(
-            <div className="BotTraining content">
+            <React.Fragment>
             {this.showLoader()}
+            <div className="BotTraining content">
             {this.state.message !== "" ? <h2>{this.state.message}!</h2> : null}
             <h1>Train your bot</h1>
             <h2>Bots can learn to classify messages in two categories</h2>
@@ -163,6 +164,7 @@ class BotTraining extends React.Component {
                 
             </Form>
             </div>
+            </React.Fragment>
         )
     }
 }

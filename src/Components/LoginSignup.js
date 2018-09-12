@@ -1,7 +1,7 @@
 import React from 'react';
 //import cuid from 'cuid'
 import { connect } from 'react-redux';
-import { Form, Button, Tab } from 'semantic-ui-react';
+import { Form, Button, Tab, Dimmer, Loader } from 'semantic-ui-react';
 import { withRouter } from 'react-router-dom'
 
 
@@ -13,11 +13,15 @@ class LoginSignup extends React.Component {
         username: "",
         password: "",
         error: "",
-        redirect: false
+        redirect: false,
+        loading: false
     }
 
     login = () => {
         console.log("logging in")
+        this.setState({
+            loading: true
+        })
         let login_params = {
             username: this.state.username,
             password: this.state.password
@@ -39,11 +43,12 @@ class LoginSignup extends React.Component {
                 this.props.setCurrentUser(response.current_user)
                 this.setState({ 
                     error: "",
+                    loading: false,
                     redirect: true
                 });
 
             } else {
-                this.setState({ error: "Invalid username or password" });
+                this.setState({ error: "Invalid username or password", loading: false });
             }
         })
     }
@@ -138,12 +143,22 @@ class LoginSignup extends React.Component {
         }
     }
 
+    showLoader = () => {
+        if(this.state.loading) {
+            return (
+                // <Dimmer active >
+                    <Loader active size="huge">Training...</Loader>
+                // </Dimmer>
+            )
+        }
+    }
+
     render() {
         return(
         <div className="LoginSignup">
             <div className="container">
-                {/* {this.props.info !== "" ? <Message color="violet">{this.props.info}</Message> : null} */}
                 {this.renderRedirect()}
+                {this.showLoader()}
                 {this.state.error !== "" ? <p className="error-message">{this.state.error}</p> : null}
                 <Tab panes={this.renderPanes()} />
             </div>
