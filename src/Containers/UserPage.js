@@ -44,7 +44,6 @@ class UserPage extends React.Component {
     }
 
     delete = (botId) => {
-        console.log("deleting bot number", botId)
         let token = localStorage.getItem("token")
         fetch(BOT_URL+botId, {
             method: "DELETE",
@@ -57,10 +56,11 @@ class UserPage extends React.Component {
             if(response.success) {
                 
                 this.props.addInfoMessage(response.message)
+                setTimeout(() => this.props.addInfoMessage(""), 5000)
                 this.setState({user: response.user})
             } else {
                 this.props.addErrorMessage(response.message)
-                setTimeout(() => this.props.addErrorMessage(""))
+                setTimeout(() => this.props.addErrorMessage(""), 5000)
             }
         })
     }

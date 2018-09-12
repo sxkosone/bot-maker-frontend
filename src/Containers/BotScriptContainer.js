@@ -68,8 +68,9 @@ class BotScriptContainer extends React.Component {
       return <React.Fragment>
             <h2>Classifier</h2>
             <Checkbox toggle checked={this.state.includeClassifier} onClick={() => this.setState({ includeClassifier: !this.state.includeClassifier })} label="Machine learning ON/OFF"/>
-            {this.state.includeClassifier ? <Button floated="right" primary as={Link} to={`/training/${this.props.botUrl}`}>Train your bot<Icon name="arrow right"/></Button> : null}
-            <br /><Popup hideOnScroll on="hover" content={this.machineLearningText()} trigger={<em>What's this?</em>}/>
+            <br /><Popup hideOnScroll on="hover" content={this.machineLearningText()} trigger={<p><em>What's this?</em></p>}/>
+            {this.state.includeClassifier ? <Button inverted secondary as={Link} to={`/training/${this.props.botUrl}`}>Train your bot<Icon name="arrow right"/></Button> : null}
+
           </React.Fragment>
     } else {
       return null
@@ -89,8 +90,8 @@ class BotScriptContainer extends React.Component {
         {this.state.pairs.map((pair, index) => <TriggerResponsePair key={index} index={index} pair={pair} handleEdits={this.handleEdits} addPair={this.props.addPair} delete={this.deleteTriggerResponsePair}/>)}
         <Divider />
         
-        <Button color="black" onClick={this.addNewTriggerResponsePair}><Icon name="plus"/>Add a new trigger</Button>
-        <Button floated="right" primary type="submit">Save and chat<Icon name="arrow right"/></Button>
+        <Button className={window.innerWidth<380 ? "fluid" : null} color="black" onClick={this.addNewTriggerResponsePair}><Icon name="plus"/>Add a new trigger</Button>
+        <Button className={window.innerWidth<380 ? "fluid" : null} floated="right" primary type="submit">Save and chat<Icon name="arrow right"/></Button>
         </Form>
         <br />
       </div>

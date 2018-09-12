@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import MessageHistory from './MessageHistory';
 import { Link } from 'react-router-dom';
-import { Form, Button, Icon } from 'semantic-ui-react';
+import { Form, Button, Icon, Divider } from 'semantic-ui-react';
 
 
 class BotChatContainer extends React.Component {
@@ -56,14 +56,16 @@ class BotChatContainer extends React.Component {
             <Form className="message-send" onSubmit={this.handleUserSend}>
             <Form.Group className="message-send">
                 <Form.Input className="message-send" type="text" value={this.state.userInput} onChange={this.handleUserTyping} action={<Form.Input className="button-send" type="submit" value="Send" />}/>
-                </Form.Group>
+            </Form.Group>
+            <Divider />
+            <Button className={window.innerWidth<380 ? "fluid" : null} size="large" primary as={ Link } to="/create"><Icon name="arrow left"/>Back to editing</Button>
+            <Button className={window.innerWidth<380 ? "fluid" : null} floated="right" size="large" color="green" as={ Link } to="/save-bot">My bot is ready<Icon name="arrow right"/></Button>
             </Form>
             
         </div>
-        <Button.Group className="Buttons">
-            <Button size="large" primary as={ Link } to="/create"><Icon name="arrow left"/>Back to editing</Button>
-            <Button size="large" color="green" as={ Link } to="/save-bot">My bot is ready<Icon name="arrow right"/></Button>
-        </Button.Group>
+        {/* <Button.Group className={window.innerWidth<380 ? "Buttons" : null}> */}
+            
+        {/* </Button.Group> */}
         </React.Fragment>
 
         )

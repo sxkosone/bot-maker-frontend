@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import {Form, Button, Loader, Dimmer} from 'semantic-ui-react';
+import {Form, Button, Loader, Dimmer, Icon} from 'semantic-ui-react';
 
 const BOT_URL = "https://peaceful-journey-69488.herokuapp.com/training/"
 const CLASSIFIER_URL = "https://peaceful-journey-69488.herokuapp.com/classifier/"
@@ -16,7 +16,8 @@ class BotTraining extends React.Component {
         responses2: "",
         message: "",
         loading: true
-        }
+    }
+
     componentDidMount() {
         //retrieve existing scripts and training data from the backend!
         let token = localStorage.getItem("token")
@@ -56,6 +57,8 @@ class BotTraining extends React.Component {
                 message: "You must be logged in to train bots!"
             })
         }
+        //check if button should be disabled
+        //this.fieldsEmpty()
         
     }
 
@@ -64,13 +67,6 @@ class BotTraining extends React.Component {
             loading: true
         })
         let token = localStorage.getItem("token")
-        
-        // let notFilled = false
-        // for(let input in this.state) {
-        //     if (this.state[input]==="" && this.state.input !== "message") {
-        //         notFilled = true
-        //     }
-        // }
         
         if (token) {
             const responses1Array = this.state.responses1.split("//")
@@ -119,11 +115,25 @@ class BotTraining extends React.Component {
     showLoader = () => {
         if(this.state.loading) {
             return (
-                <Dimmer active inverted>
-                    <Loader inverted>Loading</Loader>
+                <Dimmer active>
+                    <Loader size="large" inverted>Training...</Loader>
                 </Dimmer>
             )
         }
+    }
+    renderRedirect = () => {
+        if (this.state.redirect) {
+            this.props.history.goBack()
+        }
+    }
+    fieldsEmpty = () => {
+        for(let input in this.state) {
+            //debugger
+            if (this.state[input]==="" && input !== "message") {
+                return true
+            }
+        }
+        return false
     }
     render() {
         return(
@@ -131,7 +141,7 @@ class BotTraining extends React.Component {
             {this.showLoader()}
             {this.state.message !== "" ? <h2>{this.state.message}!</h2> : null}
             <h1>Train your bot</h1>
-            <h2>Bots can learn to classify messages to two different categories</h2>
+            <h2>Bots can learn to classify messages in two categories</h2>
             <p>This app uses machine learning to make bots better at recognising users' messages. You can add two categories, between which your bot should be able to distinguish. You should also add training data, like sentences or words, that represent that category. This text will be used to teach the bot what messages should belong to which category.</p>
             <Form>
                 <Form.Group widths="equal">
@@ -147,10 +157,10 @@ class BotTraining extends React.Component {
                     <Form.Input required name="responses1" onChange={this.handleChange} fluid label='Responses to Category #1' placeholder='Write responses, separated by "//"' value={this.state.responses1}/>
                     <Form.Input required name="responses2" onChange={this.handleChange} fluid label='Responses to Category #2' placeholder='Write responses, separated by "//"' value={this.state.responses2}/>
                 </Form.Group>
-                <Button.Group>
-                <Button fluid secondary as={Link} to={`/edit-bot/${this.props.botId}`}>Back to editing</Button >
-                <Button fluid inverted secondary onClick={this.handleSubmit}>Start training</Button >
-                </Button.Group>
+                
+                <Button color="blue" as={Link} to={`/edit-bot/${this.props.botId}`}><Icon name="arrow left"/>Back to editing</Button >
+                <Button disabled={this.fieldsEmpty()} floated="right" color="green" onClick={this.handleSubmit}>Start training<Icon name="arrow right"/></Button >
+                
             </Form>
             </div>
         )
