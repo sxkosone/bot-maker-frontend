@@ -7,8 +7,8 @@ Ruby on Rails backend API implements recognition logic and basic machine learnin
 Interactive React frontend offers script writing, “bot training” and testing platform
 
 After signing up, users’ bots are hosted on the site and they receive a shareable link to their bot. Here are some sample bots:
-Catbot: https://chatbot-builder.herokuapp.com/bots/cjly1fhsk00003h5mwkbaq6i2
-Weather Heather: https://chatbot-builder.herokuapp.com/bots/cjlz6x4x200003h5mslk7jawf
+ - Catbot: https://chatbot-builder.herokuapp.com/bots/cjly1fhsk00003h5mwkbaq6i2
+ - Weather Heather: https://chatbot-builder.herokuapp.com/bots/cjlz6x4x200003h5mslk7jawf
 
 ______
 
