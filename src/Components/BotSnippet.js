@@ -31,6 +31,7 @@ class BotSnippet extends React.Component {
                                 
                             </Form.Input>
                             {this.state.copied ? <p>Link copied to clipboard!</p> : null}
+                            
                             <div className="ui three buttons">
                             <Button inverted color="green" as={Link} to={`/bots/${this.props.bot.url_id}`}>Chat</Button>
                             <Button inverted color="olive" as={Link} to={`/edit-bot/${this.props.bot.url_id}`}>Edit</Button>

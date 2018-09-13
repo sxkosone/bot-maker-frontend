@@ -1,7 +1,6 @@
 import React from 'react';
-//import cuid from 'cuid'
 import { connect } from 'react-redux';
-import { Form, Button, Tab, Dimmer, Loader } from 'semantic-ui-react';
+import { Form, Button, Tab, Loader } from 'semantic-ui-react';
 import { withRouter } from 'react-router-dom'
 
 
@@ -94,8 +93,7 @@ class LoginSignup extends React.Component {
                     
                 }
             })
-            // .then(this.login)
-            // .catch(error => error.json()).then(console.log)
+            
     }
 
     renderLoginForm() {

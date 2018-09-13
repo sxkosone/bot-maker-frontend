@@ -1,5 +1,4 @@
 import React from "react";
-import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import {Form, Button, Loader, Dimmer, Icon} from 'semantic-ui-react';
 
@@ -95,17 +94,7 @@ class BotTraining extends React.Component {
             })
         } else {
             console.log("unable to train your bot because reasons")
-            // if(!token) {
-            //     this.setState({
-            //         message: "Unable to train your bot unless all fields are filled!",
-            //         loading: false
-            //     })
-            // } else {
-            //     this.setState({
-            //         message: "Something went wrong, unable to train your bot at the moment.",
-            //         loading: false
-            //     })
-            // }
+            
         }
     }
 
@@ -162,8 +151,8 @@ class BotTraining extends React.Component {
                     <Form.Input required name="responses2" onChange={this.handleChange} fluid label='Responses to Category #2' placeholder='Write responses, separated by "//"' value={this.state.responses2}/>
                 </Form.Group>
                 
-                <Button color="blue" as={Link} to={`/edit-bot/${this.props.botId}`}><Icon name="arrow left"/>Back to editing</Button >
-                <Button disabled={this.fieldsEmpty()} floated="right" color="green" onClick={this.handleSubmit}>Start training<Icon name="arrow right"/></Button >
+                <Button className={window.innerWidth<380 ? "fluid" : null} color="blue" as={Link} to={`/edit-bot/${this.props.botId}`}><Icon name="arrow left"/>Back to editing</Button >
+                <Button className={window.innerWidth<380 ? "fluid" : null} disabled={this.fieldsEmpty()} floated="right" color="green" onClick={this.handleSubmit}>Start training<Icon name="arrow right"/></Button >
                 
             </Form>
             </div>

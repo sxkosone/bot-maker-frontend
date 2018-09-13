@@ -1,6 +1,6 @@
 import React from 'react';
 // import { connect } from 'react-redux';
-import { Form, Button } from 'semantic-ui-react';
+import { Form, Button, Icon } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 
 import MessageHistory from './MessageHistory';
@@ -77,13 +77,10 @@ class BotPage extends React.Component {
                 <p>{this.state.botDescription}</p>
                 <MessageHistory history={this.state.messageHistory}/>
                 <Form onSubmit={this.handleUserSend}>
-                    {/* <Form.Group>
-                    <Form.Input type="text" value={this.state.userInput} onChange={this.handleUserTyping} action={<Form.Input type="submit" value="Send" />}/>
-
-                    </Form.Group> */}
-            <Form.Group className="message-send">
-                <Form.Input className="message-send" type="text" value={this.state.userInput} onChange={this.handleUserTyping} action={<Form.Input className="button-send" type="submit" value="Send" />}/>
-            </Form.Group>
+                    
+                    <Form.Group className="message-send">
+                        <Form.Input className="message-send" type="text" value={this.state.userInput} onChange={this.handleUserTyping} action={<Form.Input as={Button} disabled={this.state.userInput === ""} className="button-send inverted" type="submit"><Icon name="send" /></Form.Input>}/>
+                    </Form.Group>
                     
                 </Form>
                 

@@ -86,12 +86,13 @@ p.error-message {
 
 .WelcomeContainer {
   display: flex;
-  /* height: 100%; */
-  background: linear-gradient(230deg, #08AEEA 0%, #2AF598 100%);
+  overflow: auto; 
+  /* background: linear-gradient(230deg, #08AEEA 0%, #2AF598 100%); */
+  background: linear-gradient(230deg, #abff0f 0%, #00ffff, #e3ffe7 100%);
   background-size: 600% 600%;
   background-attachment: fixed;
   min-height: 95vh;
-  animation: Gradient 10s ease infinite;
+  animation: Gradient 12s ease infinite;
 }
 #WelcomeContent {
   margin: auto;
@@ -108,7 +109,8 @@ h1 {
 
 .BotPage {
   padding: 2rem;
-  background: linear-gradient(230deg, #08AEEA 0%, #2AF598 100%);
+  /* background: linear-gradient(230deg, #08AEEA 0%, #2AF598 100%); */
+  background: linear-gradient(230deg, #abff0f 0%, #00ffff, #e3ffe7 100%);
   background-size: 600% 600%;
   background-attachment: fixed;
   min-height: 100vh;
