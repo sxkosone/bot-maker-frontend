@@ -3,7 +3,7 @@
 A web platform for chatbot creation. Users can script dialogues and train their chatbots to have conversations. Try it out: https://chatbot-builder.herokuapp.com/
 (it takes time for the heroku backend to wake up after awhile, so your first login may take unnervingly long.)
 
-Ruby on Rails backend API implements recognition logic and basic machine learning classification to help bot “understand”. Utilizes machine learning and fuzzy string matching libraries for Ruby. Backend repo here: 
+Ruby on Rails backend API implements recognition logic and basic machine learning classification to help bot “understand”. Utilizes machine learning and fuzzy string matching libraries for Ruby. Backend repo here: https://github.com/sxkosone/bot-maker-backend
 
 Interactive React frontend offers script writing, “bot training” and testing platform. Frontend sends user's scripts and choices to Rails Backend. Redux used for state management and Semantic UI and custom CSS used for visual design.
 
