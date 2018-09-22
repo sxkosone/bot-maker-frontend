@@ -1,15 +1,18 @@
 # Chatbot Builder
 
-For my final project for Flatiron School I build a web platform for chatbot creation. Users can script dialogues and train their chatbots to have conversations. Try it out: https://chatbot-builder.herokuapp.com/
+A web platform for chatbot creation. Users can script dialogues and train their chatbots to have conversations. Try it out: https://chatbot-builder.herokuapp.com/
 (it takes time for the heroku backend to wake up after awhile, so your first login may take unnervingly long.)
 
-Ruby on Rails backend API implements recognition logic and basic machine learning classification to help bot “understand”
-Interactive React frontend offers script writing, “bot training” and testing platform
+Ruby on Rails backend API implements recognition logic and basic machine learning classification to help bot “understand”. Utilizes machine learning and fuzzy string matching libraries for Ruby. Backend repo here: 
+
+Interactive React frontend offers script writing, “bot training” and testing platform. Frontend sends user's scripts and choices to Rails Backend. Redux used for state management and Semantic UI and custom CSS used for visual design.
 
 After signing up, users’ bots are hosted on the site and they receive a shareable link to their bot. Here are some sample bots:
  - Catbot: https://chatbot-builder.herokuapp.com/bots/cjly1fhsk00003h5mwkbaq6i2
  - Weather Heather: https://chatbot-builder.herokuapp.com/bots/cjlz6x4x200003h5mslk7jawf
 
+## Read more about the process
+- [Coding a chatbot builder platform part 1 - how to make a dumb chatbot](https://medium.com/@susannakosonen/coding-a-chatbot-builder-platform-part-1-how-to-make-a-dumb-chatbot-605be5e84dca)
 ______
 
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
