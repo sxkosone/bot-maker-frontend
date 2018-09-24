@@ -12,8 +12,8 @@ After signing up, users’ bots are hosted on the site and they receive a sharea
  - Weather Heather: https://chatbot-builder.herokuapp.com/bots/cjlz6x4x200003h5mslk7jawf
 
 ## More about the process
-[Coding a chatbot builder platform part 1 - how to make a dumb chatbot](https://medium.com/@susannakosonen/coding-a-chatbot-builder-platform-part-1-how-to-make-a-dumb-chatbot-605be5e84dca)
-Wireframes for a mobile first design
+- [Coding a chatbot builder platform part 1 - how to make a dumb chatbot](https://medium.com/@susannakosonen/coding-a-chatbot-builder-platform-part-1-how-to-make-a-dumb-chatbot-605be5e84dca)
+- Wireframes for the mobile first design
 ![chatbot builder mobile view wireframes](./public/mobile-first-wireframe.png)
 ______
 
