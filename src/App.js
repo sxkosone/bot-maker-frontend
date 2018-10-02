@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import {Route, Switch} from "react-router-dom";
-import { connect } from 'react-redux';
-import { BrowserRouter } from 'react-router-dom';
+import {Route, Switch, BrowserRouter} from "react-router-dom";
+// import { BrowserRouter } from 'react-router-dom';
 
 import Navbar from './Containers/Navbar';
 import WelcomeContainer from './Containers/WelcomeContainer';
@@ -14,31 +13,14 @@ import SaveBotAndUser from './Components/SaveBotAndUser';
 import EditUsersBot from './Containers/EditUsersBot';
 import BotTraining from './Containers/BotTraining';
 
-
 class App extends Component {
   
-  logout = () => {
-    localStorage.clear()
-    
-    //redirecting
-    const saveState = {
-          goal: "redirect user to front page after logged out"
-        };
-         
-    window.history.pushState(saveState, "", "/");
-
-    this.props.addLoggedOutMessage("You're now logged out")
-    setTimeout(this.props.clearMessage, 5000)
-    this.props.clearCurrentUserFromState()
-    this.props.clearScripts()
-  }
   render() {
     return (
       <BrowserRouter>
       <div className="App">
-        <Navbar logout={this.logout}/>
-        {this.props.info ? <p className="info-message">{this.props.info}</p> : null}
-        {this.props.error ? <p className="error-message">{this.props.error}</p> : null}
+        <Navbar />
+        
         <Switch>
           <Route exact path="/" component={WelcomeContainer} />
           <Route path="/create" component={BotMakerContainer} />
@@ -66,21 +48,7 @@ class App extends Component {
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    info: state.messages.info,
-    error: state.messages.error
-  }
-}
 
-const mapDispatchToProps = dispatch => {
-  return {
-    addLoggedOutMessage: (message) => dispatch({ type: "ADD_INFO_MESSAGE", info: message }),
-    clearMessage: () => dispatch({ type: "ERASE_INFO_MESSAGE" }),
-    clearCurrentUserFromState: () => dispatch({ type: "LOG_OUT" }),
-    clearScripts: () => dispatch({ type: "CLEAR_SCRIPTS" })
-  }
-  
-}
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+// export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default App;

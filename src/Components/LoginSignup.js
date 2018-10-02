@@ -40,7 +40,7 @@ class LoginSignup extends React.Component {
         .then(response => {
             if (response.success) {
                 localStorage.setItem("token", response.token);
-                console.log("received this response",response)
+                //console.log("received this response",response)
                 //used currently to tell navbar to rerender
                 this.props.setCurrentUser(response.current_user)
                 this.setState({ 
