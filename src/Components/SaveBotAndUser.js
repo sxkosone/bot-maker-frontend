@@ -88,7 +88,6 @@ class SaveBotAndUser extends React.Component {
     }
 
     render() {
-        console.log("rendering the /save-bot page!")
         return(
             <div>
             {this.redirectToUserPage()}

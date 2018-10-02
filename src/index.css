@@ -175,6 +175,11 @@ h1 {
   border-radius: 0px;
 }
 
+#no-bot {
+  margin: auto;
+  text-align: center;
+}
+
 /*animation*/
 @keyframes Gradient {
   0% {

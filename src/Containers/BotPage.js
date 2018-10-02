@@ -91,7 +91,7 @@ class BotPage extends React.Component {
 
     render() {
         return(
-            <div className="WelcomeContainer">{this.state.errorMessage === "No bot lives in this address" ? <h1>{this.state.errorMessage}.<br/> <Button inverted size="huge" as={Link} to="/create">Create your bot here</Button></h1> : this.renderBotPage()}</div>
+            <div className="WelcomeContainer">{this.state.errorMessage === "No bot lives in this address" ? <div id="no-bot"><h2>Whoops! {this.state.errorMessage}.</h2><Button inverted size="huge" as={Link} to="/create">Create your bot here</Button></div> : this.renderBotPage()}</div>
         )
     }
 }
